@@ -1,0 +1,103 @@
+video:
+  width: ${WIDTH:1280}
+  height: ${HEIGHT:768}
+  fullscreen: ${FULLSCREEN:false}
+  modes:
+    -
+      video-mode: TEXT_GREEN
+      font: /JetBrainsMono/JetBrainsMono-Regular.ttf
+      width: 80
+      height: 25
+      frame-width: 4
+      frame-height: 2
+      frame-color: 000000
+      colors:
+        - "002000"
+        - "00FF00"
+    -
+      video-mode: TEXT_OCHER
+      font: /JetBrainsMono/JetBrainsMono-Regular.ttf
+      width: 80
+      height: 25
+      frame-width: 4
+      frame-height: 2
+      frame-color: 000000
+      colors:
+        - "201000"
+        - "f0a000"
+    -
+      video-mode: HIRES
+      font: /retro_gaming/RetroGaming.ttf
+      font-size: 11
+      width: 640
+      height: 480
+      frame-width: 20
+      frame-height: 20
+      frame-color: 000000
+      colors:
+        - "003000"
+        - "00FF00"
+    -
+      video-mode: HIRES_OCHER
+      font: /retro_gaming/RetroGaming.ttf
+      font-size: 11
+      width: 640
+      height: 480
+      frame-width: 20
+      frame-height: 20
+      frame-color: 000000
+      colors:
+        - "201000"
+        - "f0a000"
+    -
+      video-mode: LORES1
+      font: /retro_gaming/RetroGaming.ttf
+      font-size: 11
+      width: 128
+      height: 96
+      frame-width: 5
+      frame-height: 5
+      frame-color: 000000
+      colors:
+        - "003000" # background
+        - "00FF00" # green
+        - "FFFF00" # yellow
+        - "f09000" # orange
+        - "e00000" # red
+        - "C030C0" # magenta
+        - "6090FF" # blue
+        - "FFFFFF" # white
+    -
+      video-mode: LORES2
+      font: /retro_gaming/RetroGaming.ttf
+      font-size: 11
+      width: 240
+      height: 180
+      frame-width: 10
+      frame-height: 10
+      frame-color: 000000
+      colors:
+        - "003000" # background
+        - "00FF00" # green
+        - "FFFF00" # yellow
+        - "f09000" # orange
+        - "e00000" # red
+        - "C030C0" # magenta
+        - "6090FF" # blue
+        - "FFFFFF" # white
+    -
+      video-mode: HYAND
+      font: /retro_gaming/RetroGaming.ttf
+      font-size: 11
+      width: 128
+      height: 96
+      frame-width: 5
+      frame-height: 5
+      frame-color: 292929
+      colors:
+        - "000000" # background
+        - "00c48d" # green
+        - "f0eb83" # yellow
+        - "d0011b" # red
+        - "0092e1" # blue
+        - "FFFFFF" # white
