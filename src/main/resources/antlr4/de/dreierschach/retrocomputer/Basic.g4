@@ -38,6 +38,7 @@ statement:
     | drawCText
     | arcade
     | flip
+    | help
     ;
 
 forStatement: 'FOR' identifier '=' expression 'TO' expression ('STEP' expression)? ;
@@ -82,6 +83,7 @@ drawText: 'TEXT' expression 'AT' expression ',' expression;
 drawCText: 'CTEXT' expression 'AT' expression ',' expression;
 arcade: 'ARCADE' ;
 flip: 'FLIP' ;
+help: 'HELP' (topic=STRING_LITERAL)? ;
 
 identifier: IDENTIFIER ('[' expression (',' expression)* ']')? ;
 

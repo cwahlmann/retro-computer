@@ -3,8 +3,7 @@ video:
   height: ${HEIGHT:768}
   fullscreen: ${FULLSCREEN:false}
   modes:
-    -
-      video-mode: TEXT_GREEN
+    - video-mode: TEXT_GREEN
       font: /JetBrainsMono/JetBrainsMono-Regular.ttf
       width: 80
       height: 25
@@ -14,8 +13,7 @@ video:
       colors:
         - "002000"
         - "00FF00"
-    -
-      video-mode: TEXT_OCHER
+    - video-mode: TEXT_OCHER
       font: /JetBrainsMono/JetBrainsMono-Regular.ttf
       width: 80
       height: 25
@@ -25,8 +23,7 @@ video:
       colors:
         - "201000"
         - "f0a000"
-    -
-      video-mode: HIRES
+    - video-mode: HIRES
       font: /retro_gaming/RetroGaming.ttf
       font-size: 11
       width: 640
@@ -37,8 +34,7 @@ video:
       colors:
         - "003000"
         - "00FF00"
-    -
-      video-mode: HIRES_OCHER
+    - video-mode: HIRES_OCHER
       font: /retro_gaming/RetroGaming.ttf
       font-size: 11
       width: 640
@@ -49,8 +45,7 @@ video:
       colors:
         - "201000"
         - "f0a000"
-    -
-      video-mode: LORES1
+    - video-mode: LORES1
       font: /retro_gaming/RetroGaming.ttf
       font-size: 11
       width: 128
@@ -67,8 +62,7 @@ video:
         - "C030C0" # magenta
         - "6090FF" # blue
         - "FFFFFF" # white
-    -
-      video-mode: LORES2
+    - video-mode: LORES2
       font: /retro_gaming/RetroGaming.ttf
       font-size: 11
       width: 240
@@ -85,8 +79,7 @@ video:
         - "C030C0" # magenta
         - "6090FF" # blue
         - "FFFFFF" # white
-    -
-      video-mode: HYAND
+    - video-mode: HYAND
       font: /retro_gaming/RetroGaming.ttf
       font-size: 11
       width: 128
@@ -101,3 +94,230 @@ video:
         - "d0011b" # red
         - "0092e1" # blue
         - "FFFFFF" # white
+
+help:
+  topics:
+    VARIABLE:
+      syntax: "<A-Z>[<A-Z>][0-9][array-index]"
+      example: "NA0=\"JOE\":X[1,2]=9"
+      description: "A variable has a name and a possible array-index."
+    EXPRESSION:
+      syntax: "(<expression>)|NOT <expression>|<expression> <operator> <expression>|<literal>|<variable>|<function>"
+      example: "int(20.0*SIN(W)+100)"
+      description: "Evaluate a expression."
+    OPERATOR:
+      syntax: "+|-|*|/|^|%|==|<>|<|<=|>|>=|AND|OR|XOR"
+      example: "A OR B"
+      description: "Calculate result of two values."
+    LITERAL:
+      syntax: "\"<text>\"|<int-number>|<float-number>|<boolean>|<array>|PI"
+      example: "A=\"HI\":B=42:C=1.4:E=[[1,2,3],[4,5],\"SIX\"]:F=PI"
+      description: "Defines a literal value."
+    FUNCTION:
+      syntax: "SIN|COS|TAN|ASIN|ACOS|ATAN|SQR|LOG|ABS|SGN|CHR|VAL|INT|DBL|STR|RND|SPC|SUBSTR|HEX|AHEX|WIDTH|HEIGHT(<expression> [, <expression> [, ...]])"
+      example: "SUBSTR(\"HALLO WELT\", 2,5)"
+      description: "Get the result of a function."
+    SIN:
+      syntax: "SIN(<angle>)"
+      example: "SIN(2*PI)"
+      description: "Get sinus of an angle."
+    ASIN:
+      syntax: "ASIN(<value>)"
+      example: "ASIN(0.4)"
+      description: "Get arcus sinus of a value."
+    COS:
+      syntax: "COS(<angle>)"
+      example: "COS(2*PI)"
+      description: "Get cosinus of an angle."
+    ACOS:
+      syntax: "ACOS(<value>)"
+      example: "ACOS(0.9)"
+      description: "Get arcus cosinus of a value."
+    TAN:
+      syntax: "TAN(<angle>)"
+      example: "TAN(2*PI)"
+      description: "Get tangens of an angle."
+    ATAN:
+      syntax: "ATAN(<angle>)"
+      example: "ATAN(value)"
+      description: "Get arcus tangens of a value."
+    SQR:
+      syntax: "SQR(<value>)"
+      example: "SQR(16)"
+      description: "Get square root of a value."
+    LOG:
+      syntax: "LOG(<value>)"
+      example: "LOG(100)"
+      description: "Get the base-10 logarithm of a value."
+    ABS:
+      syntax: "ABS(<value>)"
+      example: "ABS(-4) -> 4"
+      description: "Get the positive part of a value."
+    SGN:
+      syntax: "SGN(<value>)"
+      example: "SGN(-4) -> -1"
+      description: "Get the sign of a value."
+    CHR:
+      syntax: "CHR(<ascii-code>)"
+      example: "CHR(65)"
+      description: "Get a char by its ascii-code."
+    VAL:
+      syntax: "VAL(<character>)"
+      example: "VAL(\"A\")"
+      description: "Get the ascii-code of a char."
+    INT:
+      syntax: "INT(<value>)"
+      example: "INT(1.23)"
+      description: "Get the integer of a number."
+    DBL:
+      syntax: "DBL(<value>)"
+      example: "DBL(5)"
+      description: "Convert to a floating value."
+    STR:
+      syntax: "STR(<value>)"
+      example: "STR(1.23)"
+      description: "Get the string-represantation of a value."
+    RND:
+      syntax: "RND(<max>)"
+      example: "RND(100)"
+      description: "Get a random number."
+    SPC:
+      syntax: "SPC(<count>)"
+      example: "SPC(10)"
+      description: "Get a string of n spaces."
+    SUBSTR:
+      syntax: "SUBST(<value>, <from> [, <to>])"
+      example: "SUBSTR(\"HELLO WORLD!\", 4,10)"
+      description: "Get a substring."
+    HEX:
+      syntax: "HEX(<number>)"
+      example: "HEX(1000)"
+      description: "Get the hexadecimal representation of a number."
+    AHEX:
+      syntax: "AHEX(<hex-string>)"
+      example: "AHEX(\"F3B7\")"
+      description: "Get the numerical value of a hecadecimal string."
+    WIDTH:
+      syntax: "WIDTH()"
+      example: "WIDTH()"
+      description: "Get the screen width."
+    HEIGHT:
+      syntax: "HEIGHT()"
+      example: "HEIGHT()"
+      description: "Get the screen height."
+    FOR:
+      syntax: "FOR <variable>=<from> TO <to> [STEP <step>] ... NEXT"
+      example: "FOR I=1 TO 10 STEP 2:PRINT I:NEXT"
+      description: "Define a loop."
+    ASSIGNMENT:
+      syntax: "<variable> '=' <expression>"
+      example: "N2=\"HALLO WELT!\":X[1,2]=15"
+      description: "Set the value of a variable."
+    IF:
+      syntax: "IF <boolean-expression> THEN <statement>|<line-no> [ELSE <statement>|<line-no>]"
+      example: "IF N>2 THEN N=N-1 ELSE 120"
+      description: "Execute statements depending on a boolean expression."
+    PRINT:
+      syntax: "PRINT|? [[@<position>,] <expression> [';' <expression> [;...]] [;]]"
+      example: "?@20,\"ERGEBNIS: X=\";X;\", Y=\";Y"
+      description: "Print values (at the given position). When finished with a ';', no newline is printed."
+    GOTO:
+      syntax: "GOTO <line-no>"
+      example: "GOTO 400"
+      description: "Continue execution at given line-no."
+    GOSUB:
+      syntax: "GOSUB <line-no>"
+      example: "GOSUB I*100+1000"
+      description: "Continue execution at given line-no, but return here after RETURN-statement."
+    RETURN:
+      syntax: "RETURN"
+      example: "RETURN"
+      description: "Return execution to the statement after the corresponding GOSUB-statement."
+    END:
+      syntax: "END"
+      example: "END"
+      description: "Stop program execution."
+    LIST:
+      syntax: "LIST [<line-no>] [<line-no>]"
+      example: "LIST 999"
+      description: "List the given program-lines."
+    CLEAR:
+      syntax: "CLEAR"
+      example: "CLEAR"
+      description: "Clear variable space."
+    CLS:
+      syntax: "CLS"
+      example: "CLS"
+      description: "Clear screen contents."
+    NEW:
+      syntax: "NEW"
+      example: "NEW"
+      description: "Clear programand variable-space."
+    INPUT:
+      syntax: "INPUT <variable>"
+      example: "INPUT N"
+      description: "Input a value from the console."
+    SCROLL:
+      syntax: "SCROLL LEFT|RIGHT"
+      example: "SCROLL RIGHT"
+      description: 'Scroll text-screen by one char in the given direction.'
+    DELAY:
+      syntax: "DELAY <seconds>"
+      example: "DELAY 1.5"
+      description: "Pause execution."
+    LOAD:
+      syntax: "LOAD <filename>"
+      example: "LOAD \"HELLO-WORLD\""
+      description: "Load a basic file from tape."
+    SAVE:
+      syntax: "SAVE <filename>"
+      example: "SAVE \"HELLO-WORLD\""
+      description: "Save a basic file from tape."
+    DIR:
+      syntax: "DIR"
+      example: "DIR"
+      description: "List contents of tape."
+    DEL:
+      syntax: "DEL <filename>"
+      example: "DEL \"HELLO-WORLD\""
+      description: "Delete a file from tape."
+    MODE:
+      syntax: "MODE <screen-mode>"
+      example: "MODE 2"
+      description: "Set screen mode (0-1 TEXT, 2-6: GFX)."
+    COLOR:
+      syntax: "COLOR <color>"
+      example: "COLOR 2"
+      description: "Set color for gfx-output"
+    SET:
+      syntax: "SET <x>,<y>"
+      example: "SET A,B+1"
+      description: "Draw a point."
+    LINE:
+      syntax: "LINE <x1>,<y1> TO <x2>,<y2>"
+      example: "LINE 0,0 TO 100,100"
+      description: "Draw a line."
+    ELLIPSE:
+      syntax: "ELLIPSE|FELLIPSE <x1>,<y1> TO <x2>,<y2>"
+      example: "FELLIPSE 0,0 TO 100,100"
+      description: "Draw a (filled) ellipse."
+    RECT:
+      syntax: "RECT|FRECT <x1>,<y1> TO <x2>,<y2>"
+      example: "RECT 0,0 TO 100,100"
+      description: "Draw a (filled) rectangle."
+    TEXT:
+      syntax: "TEXT|CTEXT <message> AT <x>,<y>"
+      example: "CTEXT \"HELLO WORLD!\" AT 50,50"
+      description: "Draw (filled) text."
+    ARCADE:
+      syntax: 'ARCADE'
+      example: 'ARCADE'
+      description: "Set arcade-mode. Screen-changes are buffered until FLIP-statement."
+    FLIP:
+      syntax: 'FLIP'
+      example: 'FLIP'
+      description: "Show buffered screen-changes."
+    HELP:
+      syntax: "HELP [<topic>]"
+      example: "HELP \"RECT\""
+      description: "Display help (for a topic). Topics are: "

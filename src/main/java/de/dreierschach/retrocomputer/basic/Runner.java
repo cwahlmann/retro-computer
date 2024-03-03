@@ -4,6 +4,7 @@ import de.dreierschach.retrocomputer.BasicLexer;
 import de.dreierschach.retrocomputer.BasicParser;
 import de.dreierschach.retrocomputer.FileService;
 import de.dreierschach.retrocomputer.basic.model.Memory;
+import de.dreierschach.retrocomputer.config.HelpConfig;
 import de.dreierschach.retrocomputer.config.VideoConfig;
 import de.dreierschach.retrocomputer.ui.Renderer;
 import de.dreierschach.retrocomputer.ui.VideoMode;
@@ -23,12 +24,14 @@ public class Runner {
     private final Memory memory;
     private final FileService fileService;
     private final RunningContext context;
+    private final HelpConfig helpConfig;
 
-    public Runner(VideoConfig config, Renderer renderer, Memory memory, FileService fileService) {
+    public Runner(VideoConfig config, Renderer renderer, Memory memory, FileService fileService, HelpConfig helpConfig) {
         this.memory = memory;
         this.renderer = renderer;
         this.fileService = fileService;
         this.context = new RunningContext(config, memory);
+        this.helpConfig = helpConfig;
     }
 
     public void run() {
@@ -95,7 +98,7 @@ public class Runner {
         var parser = new BasicParser(tokens);
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
-        var listener = new BasicListener(renderer, context, fileService);
+        var listener = new BasicListener(renderer, context, fileService, helpConfig);
         var programContext = parser.program();
         return new BasicParseExecutor(programContext, listener, context, renderer);
     }

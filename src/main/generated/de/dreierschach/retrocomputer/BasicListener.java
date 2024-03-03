@@ -458,6 +458,16 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitFlip(BasicParser.FlipContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BasicParser#help}.
+	 * @param ctx the parse tree
+	 */
+	void enterHelp(BasicParser.HelpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#help}.
+	 * @param ctx the parse tree
+	 */
+	void exitHelp(BasicParser.HelpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#identifier}.
 	 * @param ctx the parse tree
 	 */

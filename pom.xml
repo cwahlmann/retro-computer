@@ -12,7 +12,7 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springboot.version>3.2.2</springboot.version>
+        <springboot.version>3.2.3</springboot.version>
         <antlr4.version>4.13.1</antlr4.version>
         <apache.commons-lang3.version>3.14.0</apache.commons-lang3.version>
     </properties>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>3.2.3</version>
+            <version>${springboot.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
@@ -56,7 +56,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>${springboot.version}</version>
                 <executions>
                     <execution>
                         <goals>

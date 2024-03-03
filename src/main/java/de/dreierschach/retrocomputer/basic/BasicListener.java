@@ -4,11 +4,15 @@ import de.dreierschach.retrocomputer.BasicBaseListener;
 import de.dreierschach.retrocomputer.BasicParser;
 import de.dreierschach.retrocomputer.FileService;
 import de.dreierschach.retrocomputer.basic.model.*;
+import de.dreierschach.retrocomputer.config.HelpConfig;
 import de.dreierschach.retrocomputer.ui.Renderer;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static de.dreierschach.retrocomputer.basic.BasicError.Type.RETURN_WITHOUT_GOSUB;
 import static de.dreierschach.retrocomputer.basic.BasicError.Type.SYNTAX_ERROR;
@@ -19,11 +23,13 @@ public class BasicListener extends BasicBaseListener {
     private final Renderer renderer;
     private final RunningContext context;
     private final FileService fileService;
+    private final HelpConfig helpConfig;
 
-    public BasicListener(Renderer renderer, RunningContext context, FileService fileService) {
+    public BasicListener(Renderer renderer, RunningContext context, FileService fileService, HelpConfig helpConfig) {
         this.renderer = renderer;
         this.context = context;
         this.fileService = fileService;
+        this.helpConfig = helpConfig;
     }
 
     @Override
@@ -678,6 +684,22 @@ public class BasicListener extends BasicBaseListener {
     @Override
     public void exitFlip(BasicParser.FlipContext ctx) {
         renderer.flip();
+    }
+
+    @Override
+    public void exitHelp(BasicParser.HelpContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        var topic = Optional.ofNullable(ctx.topic).map(Token::getText).map(t -> t.substring(1, t.length() - 1))
+                .flatMap(t -> Optional.ofNullable(helpConfig.getTopics().get(t))).orElse(helpConfig.getTopics().get("HELP"));
+        renderer.println(">> " + topic.syntax() + " --- " + topic.example());
+        renderer.print(topic.description());
+        if (topic.syntax().startsWith("HELP")) {
+            renderer.println(helpConfig.getTopics().keySet().stream().sorted().collect(Collectors.joining(", ")));
+        } else {
+            renderer.println();
+        }
     }
 
     // -------- Expressions
