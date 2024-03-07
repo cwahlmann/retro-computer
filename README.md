@@ -12,7 +12,7 @@ FULLSCREEN=true|false
 ```
 
 To start the application, build the project using the maven task `package` 
-and start it by the `java -jar` command (Java 17+):
+and start it by the `java -jar` command (Java 19+):
 
 ```shell
 maven package
