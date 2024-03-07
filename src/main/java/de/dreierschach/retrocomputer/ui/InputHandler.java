@@ -47,7 +47,10 @@ public class InputHandler {
         pressedKeys.remove(new Key(e.getKeyCode(), e.getExtendedKeyCode()));
     }
 
-    public final void _onKeyTyped(KeyEvent e) {
+    public final void _onKeyTyped(KeyEvent keyEvent) {
+        if (keyEvent.getKeyChar() == 94) {
+            onKeyTyped(keyEvent);
+        }
     }
 
     public boolean isKeyPressed(Key key) {
@@ -58,7 +61,7 @@ public class InputHandler {
         var c = keyEvent.getKeyChar();
         var code = keyEvent.getKeyCode();
         var extended = keyEvent.getExtendedKeyCode();
-//        System.out.println(((int) c)+": "+code+"/"+extended);
+//        System.out.println(((int) c) + ": " + code + "/" + extended);
         if (inputSize == 0) {
             inputPosition = renderer.getCursor();
         }
