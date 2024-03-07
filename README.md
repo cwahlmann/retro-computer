@@ -1,6 +1,23 @@
 # retro-computer
 a fast basic-powered emulator based on an antlr4-grammar
 
+Basic-files will be stored in the directory `HOME/retrocomputer/files`.
+
+The application uses environtment vars for the screen-settings:
+```
+WIDTH=<window-width>
+HEIGHT=<window-height>
+FULLSCREEN=true|false
+```
+
+To start the application, build the project using the maven task `package` 
+and start it by the `java -jar` command (Java 17+):
+
+```shell
+maven package
+java -jar RetroComputer-<version>.jar -Xmx1G or -Xms1G
+```
+
 ## Basic examples
 
 ### SINUS
