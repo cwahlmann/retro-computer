@@ -144,6 +144,7 @@ public class BasicListener extends BasicBaseListener {
         if (context.skip()) {
             return;
         }
+        assertTextMode();
         context.expressionStack().push(new ValueExpression());
     }
 
@@ -153,13 +154,14 @@ public class BasicListener extends BasicBaseListener {
             return;
         }
         assertTextMode();
-        var expression = (ValueExpression) context.expressionStack().pop();
-        var identifier = expression.evaluate().toString();
+        var expression = context.expressionStack().pop();
+        var identifier = expression.getValue(0).string();
+        var indexes = expression.getValue(1).array().values().stream().map(Value::toNumber).toList();
         context.activateInputLine();
         renderer.setCursorType(Renderer.CursorType.INSERT);
         var input = context.awaitInputLine();
         renderer.setCursorType(Renderer.CursorType.INVISIBLE);
-        context.memory().set(identifier, new Value(input));
+        setValueByIdentifier(identifier, indexes, new Value(input));
     }
 
     @Override

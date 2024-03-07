@@ -97,6 +97,14 @@ video:
 
 help:
   topics:
+    EDIT:
+      syntax: "EDIT <LINE-NUMBER>"
+      example: "EDIT 150"
+      description: "Edit an existing line"
+    RUN:
+      syntax: "RUN [<LINE-NUMBER>]"
+      example: "RUN"
+      description: "Run a program (at the given line-number)"
     VARIABLE:
       syntax: "<A-Z>[<A-Z>][0-9][ARRAY-INDEX]"
       example: "NA0=\"JOE\":X[1,2]=9"
