@@ -1,5 +1,6 @@
-# retro-computer
-a fast basic-powered emulator based on an antlr4-grammar
+# ![retro-computer](src/main/resources/images/retro-computer.png) Retro-Computer
+
+A fast basic-powered emulator based on an antlr4-grammar
 
 Basic-files will be stored in the directory `HOME/retrocomputer/files`.
 

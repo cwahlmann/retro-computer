@@ -10,12 +10,16 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 public class Frame extends JFrame {
     private final MainCanvas mainCanvas;
 
     public Frame(VideoConfig config, Renderer renderer, InputHandler inputHandler) {
         super("Retro Computer");
+        var url = Frame.class.getResource("/images/retro-computer.png");
+        var icon = new ImageIcon(url);
+        setIconImage(icon.getImage());
         if (config.isFullscreen()) {
             GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
         } else {
