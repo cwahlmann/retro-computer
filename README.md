@@ -3,7 +3,7 @@ a fast basic-powered emulator based on an antlr4-grammar
 
 Basic-files will be stored in the directory `HOME/retrocomputer/files`.
 
-The application uses environtment vars for the screen-settings:
+The application uses environment variables for the screen-settings:
 ```
 WIDTH=<window-width>
 HEIGHT=<window-height>
