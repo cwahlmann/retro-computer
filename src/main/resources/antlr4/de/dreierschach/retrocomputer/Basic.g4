@@ -120,8 +120,6 @@ expression:
 
 keyboard            : 'KEY' '(' (expression)? ')' ;
 
-IDENTIFIER          : [A-Z]([A-Z])?([0-9])? ;
-
 functionCall:
     fn=(FN_SIN | FN_COS | FN_TAN | FN_ASIN | FN_ACOS | FN_ATAN
     | FN_SQR | FN_LOG | FN_ABS | FN_SGN | FN_CHR | FN_VAL | FN_INT | FN_DBL | FN_STR | FN_RND | FN_SPC | FN_SUBSTR
@@ -178,3 +176,5 @@ FN_HEIGHT           : 'HEIGHT' ;
 NL                  : [\n\r] ;
 SPACE               : [ \t]+ -> skip ;
 COMMENT             : 'REM' ~[\n\r]* ;
+
+IDENTIFIER          : [A-Z]([A-Z])?([0-9])? ;
