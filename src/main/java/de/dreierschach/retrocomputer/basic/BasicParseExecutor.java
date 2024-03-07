@@ -49,10 +49,9 @@ public class BasicParseExecutor {
             renderer.setCursorType(Renderer.CursorType.INSERT);
             if (!renderer.getVideoMode().isTextType()) {
                 renderer.setVideoMode(VideoMode.TEXT_GREEN);
-                renderer.clear();
             }
-            renderer.newlineIfNeeded();
-            renderer.println(e.getMessage());
+            renderer.newlineIfNeeded(context.getColor(), context.getBgColor());
+            renderer.println(e.getMessage(), context.getColor(), context.getBgColor());
         }
         context.setRunning(false);
         renderer.setCursorType(Renderer.CursorType.INSERT);

@@ -358,6 +358,16 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitColor(BasicParser.ColorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BasicParser#bgcolor}.
+	 * @param ctx the parse tree
+	 */
+	void enterBgcolor(BasicParser.BgcolorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#bgcolor}.
+	 * @param ctx the parse tree
+	 */
+	void exitBgcolor(BasicParser.BgcolorContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#set}.
 	 * @param ctx the parse tree
 	 */
@@ -418,6 +428,26 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitDrawFRect(BasicParser.DrawFRectContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BasicParser#drawFace}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrawFace(BasicParser.DrawFaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#drawFace}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrawFace(BasicParser.DrawFaceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BasicParser#drawFFace}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrawFFace(BasicParser.DrawFFaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#drawFFace}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrawFFace(BasicParser.DrawFFaceContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#drawText}.
 	 * @param ctx the parse tree
 	 */
@@ -428,6 +458,16 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitDrawText(BasicParser.DrawTextContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BasicParser#drawFText}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrawFText(BasicParser.DrawFTextContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#drawFText}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrawFText(BasicParser.DrawFTextContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#drawCText}.
 	 * @param ctx the parse tree
 	 */
@@ -437,6 +477,16 @@ public interface BasicListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDrawCText(BasicParser.DrawCTextContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BasicParser#drawFCText}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrawFCText(BasicParser.DrawFCTextContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#drawFCText}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrawFCText(BasicParser.DrawFCTextContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BasicParser#arcade}.
 	 * @param ctx the parse tree

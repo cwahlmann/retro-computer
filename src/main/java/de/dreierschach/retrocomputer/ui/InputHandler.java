@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.awt.event.KeyEvent;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -69,10 +68,10 @@ public class InputHandler {
         if (c >= ' ' && c != 0x7f && c != 65535) {
             if (runner.getContext().getInputMode() != RunningContext.Mode.RUN) {
                 if (inputPosition + inputSize >= renderer.getSize()) {
-                    renderer.scrollUp();
+                    renderer.scrollUp(runner.getContext().getColor(), runner.getContext().getBgColor());
                     inputPosition -= videoConfig.getModes().get(0).getWidth();
                 }
-                renderer.insertAtCursor(Character.toUpperCase(c), inputSize - (renderer.getCursor() - inputPosition));
+                renderer.insertAtCursor(new Renderer.Char(Character.toUpperCase(c), runner.getContext().getColor(), runner.getContext().getBgColor()), inputSize - (renderer.getCursor() - inputPosition));
                 inputSize++;
             }
             return;
@@ -86,7 +85,7 @@ public class InputHandler {
             if (runner.getContext().getInputMode() == RunningContext.Mode.EDIT) {
                 var input = renderer.get(inputPosition, inputSize);
                 renderer.setCursor(inputPosition + inputSize);
-                renderer.println();
+                renderer.println(runner.getContext().getColor(), runner.getContext().getBgColor());
                 if (matchesRunCommand(input)) {
                     var s = input.substring(input.indexOf('N') + 1).trim();
                     if (StringUtils.isEmpty(s)) {
@@ -100,7 +99,7 @@ public class InputHandler {
                     var s = input.substring(input.indexOf('T') + 1).trim();
                     var lineNumber = Integer.parseInt(s);
                     var line = memory.line(lineNumber);
-                    renderer.print(line);
+                    renderer.print(line, runner.getContext().getColor(), runner.getContext().getBgColor());
                     inputSize = line.length();
                     inputPosition = renderer.getCursor() - line.length();
                     return;
@@ -115,7 +114,7 @@ public class InputHandler {
             } else if (runner.getContext().getInputMode() == RunningContext.Mode.RUN_INPUT) {
                 var input = renderer.get(inputPosition, inputSize);
                 runner.getContext().setInputLine(input);
-                renderer.println();
+                renderer.println(runner.getContext().getColor(), runner.getContext().getBgColor());
                 inputSize = 0;
             }
             return;
@@ -152,7 +151,7 @@ public class InputHandler {
         if (code == 0x27) { // right
             if (runner.getContext().getInputMode() != RunningContext.Mode.RUN) {
                 if (renderer.getCursor() < inputPosition + inputSize) {
-                    renderer.moveRight();
+                    renderer.moveRight(runner.getContext().getColor(), runner.getContext().getBgColor());
                 }
             }
             return;

@@ -29,13 +29,18 @@ statement:
     | setMode
     | set
     | color
+    | bgcolor
     | drawLine
     | drawEllipse
     | drawFEllipse
     | drawRect
     | drawFRect
+    | drawFace
+    | drawFFace
     | drawText
+    | drawFText
     | drawCText
+    | drawFCText
     | arcade
     | flip
     | help
@@ -72,15 +77,20 @@ save: 'SAVE' expression ;
 dir: 'DIR' ;
 del: 'DEL' expression ;
 setMode: 'MODE' expression ;
-color: 'COLOR' expression ;
+color: 'COLOR' expression (bg=',' expression)? ;
+bgcolor: 'COLOR' ',' expression ;
 set: 'SET' expression ',' expression ;
 drawLine: 'LINE' expression ',' expression 'TO' expression ',' expression ;
 drawEllipse: 'ELLIPSE' expression ',' expression 'TO' expression ',' expression ;
 drawFEllipse: 'FELLIPSE' expression ',' expression 'TO' expression ',' expression ;
 drawRect: 'RECT' expression ',' expression 'TO' expression ',' expression ;
 drawFRect: 'FRECT' expression ',' expression 'TO' expression ',' expression ;
+drawFace: 'FACE' expression ',' expression 'TO' expression ',' expression  'TO' expression ',' expression ;
+drawFFace: 'FFACE' expression ',' expression 'TO' expression ',' expression  'TO' expression ',' expression ;
 drawText: 'TEXT' expression 'AT' expression ',' expression;
+drawFText: 'FTEXT' expression 'AT' expression ',' expression;
 drawCText: 'CTEXT' expression 'AT' expression ',' expression;
+drawFCText: 'FCTEXT' expression 'AT' expression ',' expression;
 arcade: 'ARCADE' ;
 flip: 'FLIP' ;
 help: 'HELP' (topic=STRING_LITERAL)? ;

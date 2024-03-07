@@ -58,10 +58,10 @@ public class BasicListener extends BasicBaseListener {
                 throw new BasicError(BasicError.Type.FUNCTION_ERROR, context.getPp());
             }
             renderer.setCursor(pos);
-            renderer.print(expression.evaluate(1).toString());
+            renderer.print(expression.evaluate(1).toString(), context.getColor(), context.getBgColor());
             return;
         }
-        renderer.print(expression.evaluate().toString());
+        renderer.print(expression.evaluate().toString(), context.getColor(), context.getBgColor());
     }
 
     @Override
@@ -85,10 +85,10 @@ public class BasicListener extends BasicBaseListener {
                 throw new BasicError(BasicError.Type.FUNCTION_ERROR, context.getPp());
             }
             renderer.setCursor(pos);
-            renderer.println(expression.evaluate(1).toString());
+            renderer.println(expression.evaluate(1).toString(), context.getColor(), context.getBgColor());
             return;
         }
-        renderer.println(expression.evaluate().toString());
+        renderer.println(expression.evaluate().toString(), context.getColor(), context.getBgColor());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class BasicListener extends BasicBaseListener {
             return;
         }
         assertTextMode();
-        renderer.println();
+        renderer.println(context.getColor(), context.getBgColor());
     }
 
     @Override
@@ -321,28 +321,28 @@ public class BasicListener extends BasicBaseListener {
     @Override
     public void exitListAll(BasicParser.ListAllContext ctx) {
         assertTextMode();
-        context.memory().lines().forEach(renderer::println);
+        context.memory().lines().forEach(line -> renderer.println(line, context.getColor(), context.getBgColor()));
     }
 
     @Override
     public void exitListOne(BasicParser.ListOneContext ctx) {
         assertTextMode();
         var lineNumber = Integer.parseInt(ctx.NUMBER().getText());
-        renderer.println(context.memory().line(lineNumber));
+        renderer.println(context.memory().line(lineNumber), context.getColor(), context.getBgColor());
     }
 
     @Override
     public void exitListFrom(BasicParser.ListFromContext ctx) {
         assertTextMode();
         var from = Integer.parseInt(ctx.NUMBER().getText());
-        context.memory().linesFrom(from).forEach(renderer::println);
+        context.memory().linesFrom(from).forEach(line -> renderer.println(line, context.getColor(), context.getBgColor()));
     }
 
     @Override
     public void exitListTo(BasicParser.ListToContext ctx) {
         assertTextMode();
         var to = Integer.parseInt(ctx.NUMBER().getText());
-        context.memory().linesTo(to).forEach(renderer::println);
+        context.memory().linesTo(to).forEach(line -> renderer.println(line, context.getColor(), context.getBgColor()));
     }
 
     @Override
@@ -350,7 +350,7 @@ public class BasicListener extends BasicBaseListener {
         assertTextMode();
         var from = Integer.parseInt(ctx.from.getText());
         var to = Integer.parseInt(ctx.to.getText());
-        context.memory().linesFromTo(from, to).forEach(renderer::println);
+        context.memory().linesFromTo(from, to).forEach(line -> renderer.println(line, context.getColor(), context.getBgColor()));
     }
 
     @Override
@@ -360,14 +360,14 @@ public class BasicListener extends BasicBaseListener {
 
     @Override
     public void exitCls(BasicParser.ClsContext ctx) {
-        renderer.clear();
+        renderer.clear(context.getColor(), context.getBgColor());
     }
 
     @Override
     public void exitNew(BasicParser.NewContext ctx) {
         context.setRunning(false);
         context.memory().clearAll();
-        renderer.clearText();
+        renderer.clearText(context.getColor(), context.getBgColor());
     }
 
     @Override
@@ -385,14 +385,14 @@ public class BasicListener extends BasicBaseListener {
         }
         var name = context.expressionStack().pop().evaluate();
         if (name == Value.UNDEF) {
-            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
             return;
         }
         try {
             fileService.load(name.toString());
-            renderer.println("\"" + name + "\" LOADED.");
+            renderer.println("\"" + name + "\" LOADED.", context.getColor(), context.getBgColor());
         } catch (Exception e) {
-            renderer.println(new BasicError(BasicError.Type.LOADING_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.LOADING_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
         }
     }
 
@@ -411,15 +411,15 @@ public class BasicListener extends BasicBaseListener {
         }
         var name = context.expressionStack().pop().evaluate();
         if (name == Value.UNDEF) {
-            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
             return;
         }
 
         fileService.save(name.toString());
         try {
-            renderer.println("\"" + name + "\" SAVED.");
+            renderer.println("\"" + name + "\" SAVED.", context.getColor(), context.getBgColor());
         } catch (Exception e) {
-            renderer.println(new BasicError(BasicError.Type.SAVING_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.SAVING_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
         }
     }
 
@@ -429,7 +429,7 @@ public class BasicListener extends BasicBaseListener {
             return;
         }
         assertTextMode();
-        fileService.dir().forEach(name -> renderer.println("- \"" + name + "\""));
+        fileService.dir().forEach(name -> renderer.println("- \"" + name + "\"", context.getColor(), context.getBgColor()));
     }
 
     @Override
@@ -447,14 +447,14 @@ public class BasicListener extends BasicBaseListener {
         }
         var name = context.expressionStack().pop().evaluate();
         if (name == Value.UNDEF) {
-            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.SYNTAX_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
             return;
         }
         try {
             fileService.delete(name.toString());
-            renderer.println("\"" + name + "\" DELETED.");
+            renderer.println("\"" + name + "\" DELETED.", context.getColor(), context.getBgColor());
         } catch (Exception e) {
-            renderer.println(new BasicError(BasicError.Type.DELETE_ERROR, context.getPp()).getMessage());
+            renderer.println(new BasicError(BasicError.Type.DELETE_ERROR, context.getPp()).getMessage(), context.getColor(), context.getBgColor());
         }
     }
 
@@ -474,7 +474,8 @@ public class BasicListener extends BasicBaseListener {
         var expression = context.expressionStack().pop();
         renderer.setVideoMode(videoMode(expression.evaluate().toNumber()));
         context.setColor(1);
-        renderer.clear();
+        context.setBgColor(0);
+        renderer.clear(1, 0);
     }
 
     @Override
@@ -492,6 +493,26 @@ public class BasicListener extends BasicBaseListener {
         }
         var expression = context.expressionStack().pop();
         context.setColor(expression.evaluate().toNumber());
+        if (ctx.bg != null) {
+            context.setBgColor(expression.getValue(1).toNumber());
+        }
+    }
+
+    @Override
+    public void enterBgcolor(BasicParser.BgcolorContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitBgcolor(BasicParser.BgcolorContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        var expression = context.expressionStack().pop();
+        context.setBgColor(expression.evaluate().toNumber());
     }
 
     @Override
@@ -633,6 +654,56 @@ public class BasicListener extends BasicBaseListener {
     }
 
     @Override
+    public void enterDrawFace(BasicParser.DrawFaceContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitDrawFace(BasicParser.DrawFaceContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        assertGfxMode();
+        var expression = context.expressionStack().pop();
+        var x0 = expression.getValue(0).toNumber();
+        var y0 = expression.getValue(1).toNumber();
+        var x1 = expression.getValue(2).toNumber();
+        var y1 = expression.getValue(3).toNumber();
+        var x2 = expression.getValue(4).toNumber();
+        var y2 = expression.getValue(5).toNumber();
+        var color = context.getColor();
+        renderer.drawFace(x0, y0, x1, y1, x2, y2, color);
+    }
+
+    @Override
+    public void enterDrawFFace(BasicParser.DrawFFaceContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitDrawFFace(BasicParser.DrawFFaceContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        assertGfxMode();
+        var expression = context.expressionStack().pop();
+        var x0 = expression.getValue(0).toNumber();
+        var y0 = expression.getValue(1).toNumber();
+        var x1 = expression.getValue(2).toNumber();
+        var y1 = expression.getValue(3).toNumber();
+        var x2 = expression.getValue(4).toNumber();
+        var y2 = expression.getValue(5).toNumber();
+        var color = context.getColor();
+        renderer.drawFilledFace(x0, y0, x1, y1, x2, y2, color);
+    }
+
+    @Override
     public void enterDrawText(BasicParser.DrawTextContext ctx) {
         if (context.skip()) {
             return;
@@ -651,7 +722,7 @@ public class BasicListener extends BasicBaseListener {
         var x = expression.getValue(1).toNumber();
         var y = expression.getValue(2).toNumber();
         var color = context.getColor();
-        renderer.drawText(text, x, y, color);
+        renderer.drawText(text, x, y, color, -1);
     }
 
     @Override
@@ -673,7 +744,49 @@ public class BasicListener extends BasicBaseListener {
         var x = expression.getValue(1).toNumber();
         var y = expression.getValue(2).toNumber();
         var color = context.getColor();
-        renderer.centerText(text, x, y, color);
+        renderer.centerText(text, x, y, color, -1);
+    }
+
+    @Override
+    public void enterDrawFText(BasicParser.DrawFTextContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitDrawFText(BasicParser.DrawFTextContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        assertGfxMode();
+        var expression = context.expressionStack().pop();
+        var text = expression.getValue(0).toString();
+        var x = expression.getValue(1).toNumber();
+        var y = expression.getValue(2).toNumber();
+        renderer.drawText(text, x, y, context.getColor(), context.getBgColor());
+    }
+
+    @Override
+    public void enterDrawFCText(BasicParser.DrawFCTextContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitDrawFCText(BasicParser.DrawFCTextContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        assertGfxMode();
+        var expression = context.expressionStack().pop();
+        var text = expression.getValue(0).toString();
+        var x = expression.getValue(1).toNumber();
+        var y = expression.getValue(2).toNumber();
+        renderer.centerText(text, x, y, context.getColor(), context.getBgColor());
     }
 
     @Override
@@ -693,12 +806,12 @@ public class BasicListener extends BasicBaseListener {
         }
         var topic = Optional.ofNullable(ctx.topic).map(Token::getText).map(t -> t.substring(1, t.length() - 1))
                 .flatMap(t -> Optional.ofNullable(helpConfig.getTopics().get(t))).orElse(helpConfig.getTopics().get("HELP"));
-        renderer.println(">> " + topic.syntax() + " --- " + topic.example());
-        renderer.print(topic.description());
+        renderer.println(">> " + topic.syntax() + " --- " + topic.example(), context.getColor(), context.getBgColor());
+        renderer.print(topic.description(), context.getColor(), context.getBgColor());
         if (topic.syntax().startsWith("HELP")) {
-            renderer.println(helpConfig.getTopics().keySet().stream().sorted().collect(Collectors.joining(", ")));
+            renderer.println(helpConfig.getTopics().keySet().stream().sorted().collect(Collectors.joining(", ")), context.getColor(), context.getBgColor());
         } else {
-            renderer.println();
+            renderer.println(context.getColor(), context.getBgColor());
         }
     }
 

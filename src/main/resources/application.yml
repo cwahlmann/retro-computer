@@ -252,7 +252,7 @@ help:
     NEW:
       syntax: "NEW"
       example: "NEW"
-      description: "Clear programand variable-space."
+      description: "Clear program and variable-space."
     INPUT:
       syntax: "INPUT <variable>"
       example: "INPUT N"
@@ -286,9 +286,9 @@ help:
       example: "MODE 2"
       description: "Set screen mode (0-1 TEXT, 2-6: GFX)."
     COLOR:
-      syntax: "COLOR <color>"
-      example: "COLOR 2"
-      description: "Set color for gfx-output"
+      syntax: "COLOR [<color>][, <background-color>]"
+      example: "COLOR 2,1"
+      description: "Set color and background color for text- and gfx-output"
     SET:
       syntax: "SET <x>,<y>"
       example: "SET A,B+1"
@@ -305,6 +305,10 @@ help:
       syntax: "RECT|FRECT <x1>,<y1> TO <x2>,<y2>"
       example: "RECT 0,0 TO 100,100"
       description: "Draw a (filled) rectangle."
+    FACE:
+      syntax: "FACE|FFACE <x1>,<y1> TO <x2>,<y2> TO <x3>,<y3>"
+      example: "FFACE 100,100 to 150,120 to 120,200"
+      description: "Draw a (filled) triangular face."
     TEXT:
       syntax: "TEXT|CTEXT <message> AT <x>,<y>"
       example: "CTEXT \"HELLO WORLD!\" AT 50,50"

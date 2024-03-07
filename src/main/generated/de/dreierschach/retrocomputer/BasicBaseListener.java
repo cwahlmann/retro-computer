@@ -437,6 +437,18 @@ public class BasicBaseListener implements BasicListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBgcolor(BasicParser.BgcolorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBgcolor(BasicParser.BgcolorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSet(BasicParser.SetContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -509,6 +521,30 @@ public class BasicBaseListener implements BasicListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDrawFace(BasicParser.DrawFaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrawFace(BasicParser.DrawFaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDrawFFace(BasicParser.DrawFFaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrawFFace(BasicParser.DrawFFaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDrawText(BasicParser.DrawTextContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -521,6 +557,18 @@ public class BasicBaseListener implements BasicListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDrawFText(BasicParser.DrawFTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrawFText(BasicParser.DrawFTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDrawCText(BasicParser.DrawCTextContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -528,6 +576,18 @@ public class BasicBaseListener implements BasicListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDrawCText(BasicParser.DrawCTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDrawFCText(BasicParser.DrawFCTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrawFCText(BasicParser.DrawFCTextContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

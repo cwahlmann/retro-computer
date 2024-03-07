@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Renderer {
@@ -24,7 +25,10 @@ public class Renderer {
 
     private VideoMode videoMode = VideoMode.TEXT_GREEN;
 
-    private char[][] textScreen;
+    public record Char(char c, int fg, int bg) {
+    }
+
+    private Char[][] textScreen;
     private double charWidth;
     private double charHeight;
     private Font textFont;
@@ -36,7 +40,7 @@ public class Renderer {
         this.config = config;
         initVideoMode(VideoMode.HIRES);
         setVideoMode(VideoMode.TEXT_GREEN);
-        clear();
+        clear(1, 0);
     }
 
 
@@ -44,7 +48,7 @@ public class Renderer {
         initVideoMode(videoMode);
         this.videoMode = videoMode;
         this.arcadeMode = false;
-        clear();
+        clear(1, 0);
     }
 
     public boolean isTextMode() {
@@ -69,7 +73,7 @@ public class Renderer {
         try {
             if (videoMode.isTextType()) {
                 textFont = Font.createFont(Font.TRUETYPE_FONT, Renderer.class.getResourceAsStream(config.getFont()));
-                textScreen = new char[2][config.getWidth() * config.getHeight()];
+                textScreen = new Char[2][config.getWidth() * config.getHeight()];
                 return;
             }
             gfxFont = Font.createFont(Font.TRUETYPE_FONT, Renderer.class.getResourceAsStream(config.getFont())).deriveFont(config.getFontSize());
@@ -117,11 +121,11 @@ public class Renderer {
         return videoMode;
     }
 
-    public void clear() {
+    public void clear(int fg, int bg) {
         if (videoMode.isTextType()) {
-            clearText();
+            clearText(fg, bg);
         } else {
-            clearGfx();
+            clearGfx(bg);
         }
     }
 
@@ -136,13 +140,13 @@ public class Renderer {
 
 // gfx-mode
 
-     BufferedImage image2draw() {
-        return canvas[isArcadeMode() ? 1-actualPage: actualPage];
-     }
+    BufferedImage image2draw() {
+        return canvas[isArcadeMode() ? 1 - actualPage : actualPage];
+    }
 
-    public void clearGfx() {
+    public void clearGfx(int bgColor) {
         var g2 = (Graphics2D) image2draw().getGraphics();
-        g2.setColor(gfxColors.get(0));
+        g2.setColor(gfxColors.get(bgColor));
         g2.fillRect(0, 0, modeConfig().getWidth(), modeConfig().getHeight());
         repaint();
     }
@@ -189,24 +193,48 @@ public class Renderer {
         repaint();
     }
 
-    public void drawText(String text, int x, int y, int color) {
+    public void drawFace(int x0, int y0, int x1, int y1, int x2, int y2, int color) {
         var g2 = (Graphics2D) image2draw().getGraphics();
-        var asc = gfxFont.getLineMetrics(text, g2.getFontRenderContext()).getAscent();
         g2.setColor(gfxColors.get(color % gfxColors.size()));
-        g2.setFont(gfxFont);
-        g2.drawString(text, x, y + asc);
+        g2.drawPolygon(new int[]{x0, x1, x2}, new int[]{y0, y1, y2}, 3);
         repaint();
     }
 
-    public void centerText(String text, int x, int y, int color) {
+    public void drawFilledFace(int x0, int y0, int x1, int y1, int x2, int y2, int color) {
+        var g2 = (Graphics2D) image2draw().getGraphics();
+        g2.setColor(gfxColors.get(color % gfxColors.size()));
+        g2.fillPolygon(new int[]{x0, x1, x2}, new int[]{y0, y1, y2}, 3);
+        repaint();
+    }
+
+    public void drawText(String text, int x, int y, int color, int bgColor) {
         var g2 = (Graphics2D) image2draw().getGraphics();
         var asc = gfxFont.getLineMetrics(text, g2.getFontRenderContext()).getAscent();
         var bounds = gfxFont.getStringBounds(text, g2.getFontRenderContext()).getBounds2D();
-        var height = bounds.getHeight();
-        var width = bounds.getWidth();
+        if (bgColor >= 0) {
+            g2.setColor(gfxColors.get(bgColor % gfxColors.size()));
+            g2.fillRect(x, y, (int) (bounds.getWidth()), (int) (bounds.getHeight()));
+        }
         g2.setColor(gfxColors.get(color % gfxColors.size()));
         g2.setFont(gfxFont);
-        g2.drawString(text, (float) (x - width / 2), (float) (y - height / 2 + asc));
+        g2.drawString(text, x, (int) (y + asc));
+        repaint();
+    }
+
+    public void centerText(String text, int x, int y, int color, int bgColor) {
+        var g2 = (Graphics2D) image2draw().getGraphics();
+        var bounds = gfxFont.getStringBounds(text, g2.getFontRenderContext()).getBounds2D();
+        var height = bounds.getHeight();
+        var width = bounds.getWidth();
+        var minx = bounds.getMinX();
+        var miny = bounds.getMinY();
+        if (bgColor >= 0) {
+            g2.setColor(gfxColors.get(bgColor % gfxColors.size()));
+            g2.drawRect((int) (x - minx - width / 2), (int) (y - height / 2), (int) (width), (int) (height));
+        }
+        g2.setColor(gfxColors.get(color % gfxColors.size()));
+        g2.setFont(gfxFont);
+        g2.drawString(text, (float) (x - width / 2 - minx), (float) (y - height / 2 - miny));
         repaint();
     }
 
@@ -234,7 +262,7 @@ public class Renderer {
 
 // text-Mode
 
-    public char[] page2draw() {
+    public Char[] page2draw() {
         return textScreen[isArcadeMode() ? 1 - actualPage : actualPage];
     }
 
@@ -246,38 +274,39 @@ public class Renderer {
         this.cursorType = cursorType;
     }
 
-    public void clearText() {
-        Arrays.fill(page2draw(), ' ');
+    public void clearText(int fg, int bg) {
+        Arrays.fill(page2draw(), new Char(' ', fg, bg));
         cursor = 0;
     }
 
-    public void imprint() {
-        clearText();
-        println("PEANUT SOFTWARE TECHNOLOGIES (R)");
-        println("BASIC VERSION 2.0");
-        println();
-        println("READY.");
+    public void imprint(int fg, int bg) {
+        clearText(fg, bg);
+        println("PEANUT SOFTWARE TECHNOLOGIES (R)", fg, bg);
+        println("BASIC VERSION 2.0", fg, bg);
+        println(fg, bg);
+        println("READY.", fg, bg);
     }
 
-    public void print(String s) {
+    public void print(String s, int fg, int bg) {
         for (int i = 0; i < s.length(); i++) {
-            page2draw()[cursor] = s.charAt(i);
-            moveRight();
+            page2draw()[cursor] = new Char(s.charAt(i), fg, bg);
+            moveRight(fg, bg);
         }
         repaint();
     }
 
-    public void println(String s) {
-        print(s);
-        println();
+    public void println(String s, int fg, int bg) {
+        print(s, fg, bg);
+        println(fg, bg);
     }
 
-    public void scrollUp() {
+    public void scrollUp(int fg, int bg) {
         var config = modeConfig();
         for (int i = 0; i < page2draw().length - config.getWidth(); i++) {
             page2draw()[i] = page2draw()[i + config.getWidth()];
         }
-        Arrays.fill(page2draw(), page2draw().length - config.getWidth(), page2draw().length, ' ');
+
+        Arrays.fill(page2draw(), page2draw().length - config.getWidth(), page2draw().length, new Char(' ', fg, bg));
         cursor -= config.getWidth();
         repaint();
     }
@@ -288,7 +317,8 @@ public class Renderer {
             page2draw()[i] = page2draw()[i + 1];
         }
         for (int j = 0; j < config.getHeight(); j++) {
-            page2draw()[(j + 1) * config.getWidth() - 1] = ' ';
+            var c = page2draw()[(j + 1) * config.getWidth() - 1];
+            page2draw()[(j + 1) * config.getWidth() - 1] = new Char(' ', c.fg(), c.bg());
         }
         repaint();
     }
@@ -300,7 +330,8 @@ public class Renderer {
             page2draw()[i] = page2draw()[i - 1];
         }
         for (int j = 0; j < config.getHeight(); j++) {
-            page2draw()[j * config.getWidth()] = ' ';
+            var c = page2draw()[j * config.getWidth()];
+            page2draw()[j * config.getWidth()] = new Char(' ', c.fg(), c.bg());
         }
         repaint();
     }
@@ -322,14 +353,16 @@ public class Renderer {
         if (pos >= page2draw().length) {
             return "";
         }
+        var x = new char[100];
         var s = pos + size > page2draw().length ? page2draw().length - pos : size;
-        return new String(Arrays.copyOfRange(page2draw(), pos, pos + s));
+        var cs = Arrays.copyOfRange(page2draw(), pos, pos + s);
+        return Arrays.stream(cs).map(ch -> "" + ch.c()).collect(Collectors.joining());
     }
 
-    public void moveRight() {
+    public void moveRight(int fg, int bg) {
         cursor = cursor + 1;
         if (cursor >= page2draw().length) {
-            scrollUp();
+            scrollUp(fg, bg);
         }
         repaint();
     }
@@ -346,11 +379,12 @@ public class Renderer {
         for (int i = 0; i < size - 1; i++) {
             page2draw()[cursor + i] = page2draw()[cursor + i + 1];
         }
-        page2draw()[cursor + size - 1] = ' ';
+        var c = page2draw()[cursor + size - 1];
+        page2draw()[cursor + size - 1] = new Char(' ', c.fg(), c.bg());
         repaint();
     }
 
-    public void insertAtCursor(char c, int size) {
+    public void insertAtCursor(Char c, int size) {
         for (int i = size; i > 0; i--) {
             page2draw()[cursor + i] = page2draw()[cursor + i - 1];
         }
@@ -359,13 +393,13 @@ public class Renderer {
         repaint();
     }
 
-    public void newlineIfNeeded() {
+    public void newlineIfNeeded(int fg, int bg) {
         if (cursor % modeConfig().getWidth() > 0) {
-            println();
+            println(fg, bg);
         }
     }
 
-    public void println() {
+    public void println(int fg, int bg) {
         var config = modeConfig();
 
         var line = cursor - cursor % config.getWidth();
@@ -374,7 +408,7 @@ public class Renderer {
             repaint();
             return;
         }
-        scrollUp();
+        scrollUp(fg, bg);
         repaint();
     }
 
@@ -392,18 +426,23 @@ public class Renderer {
         var offsetY = (int) (config.getFrameHeight() * charHeight);
         offsetX += (g2.getClipBounds().width - 2 * offsetX - width) / 2;
         offsetY += (g2.getClipBounds().height - 2 * offsetY - height) / 2;
-        g2.setColor(gfxColors.get(0));
-        g2.fillRect(offsetX, offsetY, width, height);
 
-        g2.setColor(gfxColors.get(1));
         for (int j = 0; j < config.getHeight(); j++) {
             for (int i = 0; i < config.getWidth(); i++) {
-                var c = textScreen[actualPage][j * config.getWidth() + i] + "";
+                var ch = textScreen[actualPage][j * config.getWidth() + i];
+                g2.setColor(gfxColors.get(ch.bg()));
+                g2.fillRect((int) (charWidth * i + offsetX), (int) (charHeight * j + offsetY), (int) (charWidth + 1), (int) (charHeight + 1));
+                g2.setColor(gfxColors.get(ch.fg()));
+                var c = ch.c() + "";
                 g2.drawString(c, (int) (charWidth * i + offsetX), (int) (charHeight * j + offsetY + f.getLineMetrics(c, g2.getFontRenderContext()).getAscent()));
             }
         }
+        if (cursor > config.getWidth() * config.getHeight()) {
+            return;
+        }
         var px = (int) ((cursor % config.getWidth()) * charWidth + offsetX);
         var py = (int) ((cursor / config.getWidth()) * charHeight + offsetY);
+        g2.setColor(gfxColors.get(textScreen[actualPage][cursor].fg()));
         switch (cursorType) {
             case INSERT -> g2.drawLine(px, py, px, py + (int) charHeight);
             case OVERWRITE ->

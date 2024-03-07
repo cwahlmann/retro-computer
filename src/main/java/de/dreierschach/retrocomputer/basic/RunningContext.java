@@ -44,6 +44,7 @@ public class RunningContext {
     }
 
     public int color = 1;
+    public int bgColor = 0;
 
     public RunningContext(VideoConfig config, Memory memory) {
         this.config = config;
@@ -184,5 +185,13 @@ public class RunningContext {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getBgColor() {
+        return bgColor;
+    }
+
+    public void setBgColor(int bgColor) {
+        this.bgColor = bgColor;
     }
 }

@@ -65,7 +65,7 @@ public class Frame extends JFrame {
         mainCanvas = new MainCanvas(renderer);
         renderer.setRepaintCallback(this::repaint);
         add(mainCanvas);
-        renderer.imprint();
+        renderer.imprint(1, 0);
     }
 
     public static class MainCanvas extends JPanel {

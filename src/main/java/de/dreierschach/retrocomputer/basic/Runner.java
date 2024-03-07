@@ -35,7 +35,7 @@ public class Runner {
     }
 
     public void run() {
-        run(String.join("\n", memory.lines()));
+        run(String.join("\n", memory.lines()), 0);
     }
 
     public void run(int lineNumber) {
@@ -43,7 +43,7 @@ public class Runner {
     }
 
     public void run(String program) {
-        run(program, 0);
+        run(program, -1);
     }
 
     public void run(String program, int lineNumber) {
@@ -52,22 +52,25 @@ public class Runner {
             var bytesAsChar = CharStreams.fromString(program);
             executor = getExecutor(bytesAsChar);
         } catch (BasicError e) {
-            renderer.newlineIfNeeded();
-            renderer.println(e.getMessage());
-            renderer.println("READY.");
+            renderer.newlineIfNeeded(context.getColor(), context.getBgColor());
+            renderer.println(e.getMessage(), context.getColor(), context.getBgColor());
+            renderer.println("READY.", context.getColor(), context.getBgColor());
             return;
         }
         executor.run(lineNumber);
         if (!renderer.getVideoMode().isTextType()) {
             renderer.setVideoMode(VideoMode.TEXT_GREEN);
-            renderer.clear();
+        }
+        if (lineNumber >= 0) {
+            context.setColor(1);
+            context.setBgColor(0);
         }
         renderer.setArcadeMode(false);
-        renderer.newlineIfNeeded();
+        renderer.newlineIfNeeded(context.getColor(), context.getBgColor());
         if (context.isInterrupted()) {
-            renderer.println("?BREAK");
+            renderer.println("?BREAK", context.getColor(), context.getBgColor());
         } else {
-            renderer.println("READY.");
+            renderer.println("READY.", context.getColor(), context.getBgColor());
         }
     }
 
