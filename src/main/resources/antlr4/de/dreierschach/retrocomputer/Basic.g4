@@ -113,6 +113,7 @@ expression:
     | STRING_LITERAL                                          #stringExpr
     | BOOL_LITERAL                                            #boolExpr
     | '[' expression (',' expression)* ']'                    #arrayExpr
+    | 'POINT' '(' expression ',' expression ')'               #pointExpr
     | functionCall                                            #funcCallExpr
     | keyboard                                                #keyboardExpr
     | identifier                                              #idExp

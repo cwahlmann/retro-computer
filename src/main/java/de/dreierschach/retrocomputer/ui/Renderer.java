@@ -140,6 +140,16 @@ public class Renderer {
 
 // gfx-mode
 
+    public int getColorIndex(int x, int y) {
+        int rgbFound = image2draw().getRGB(x, y);
+        for (int c = 0; c < gfxColors.size(); c++) {
+            if (gfxColors.get(c).getRGB() == rgbFound) {
+                return c;
+            }
+        }
+        return 0;
+    }
+
     BufferedImage image2draw() {
         return canvas[isArcadeMode() ? 1 - actualPage : actualPage];
     }

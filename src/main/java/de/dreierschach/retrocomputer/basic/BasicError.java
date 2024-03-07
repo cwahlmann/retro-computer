@@ -14,6 +14,6 @@ public class BasicError extends RuntimeException {
     }
 
     public BasicError(Type type, PP pp) {
-        super("?" + type.name() + " at " + pp.line());
+        super("?" + type.name().replace("_", "-") + " AT " + pp.line());
     }
 }

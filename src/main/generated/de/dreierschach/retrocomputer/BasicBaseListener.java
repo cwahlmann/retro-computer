@@ -833,6 +833,18 @@ public class BasicBaseListener implements BasicListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPointExpr(BasicParser.PointExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPointExpr(BasicParser.PointExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterKeyboard(BasicParser.KeyboardContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -720,6 +720,18 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitPowExpr(BasicParser.PowExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code pointExpr}
+	 * labeled alternative in {@link BasicParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPointExpr(BasicParser.PointExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code pointExpr}
+	 * labeled alternative in {@link BasicParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPointExpr(BasicParser.PointExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#keyboard}.
 	 * @param ctx the parse tree
 	 */

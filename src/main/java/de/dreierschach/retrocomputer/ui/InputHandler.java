@@ -76,9 +76,14 @@ public class InputHandler {
             }
             return;
         }
-        if (c == 0x03) {
+        if (c == 0x03) { // break
             if (runner.getContext().getInputMode() != RunningContext.Mode.EDIT) {
                 runner.stop();
+            } else {
+                renderer.setCursor(inputPosition + inputSize);
+                renderer.println(runner.getContext().getColor(), runner.getContext().getBgColor());
+                inputPosition = renderer.getCursor();
+                inputSize = 0;
             }
         }
         if (c == 0x0a) {
@@ -163,9 +168,15 @@ public class InputHandler {
             return;
         }
         if (code == 0x24) { // pos1
+            if (runner.getContext().getInputMode() != RunningContext.Mode.RUN) {
+                renderer.setCursor(inputPosition);
+            }
             return;
         }
         if (code == 0x23) { // end
+            if (runner.getContext().getInputMode() != RunningContext.Mode.RUN) {
+                renderer.setCursor(inputPosition + inputSize);
+            }
             return;
         }
     }

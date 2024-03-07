@@ -14,8 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static de.dreierschach.retrocomputer.basic.BasicError.Type.RETURN_WITHOUT_GOSUB;
-import static de.dreierschach.retrocomputer.basic.BasicError.Type.SYNTAX_ERROR;
+import static de.dreierschach.retrocomputer.basic.BasicError.Type.*;
 import static de.dreierschach.retrocomputer.basic.model.Value.arrayValue;
 import static de.dreierschach.retrocomputer.ui.VideoMode.videoMode;
 
@@ -904,6 +903,32 @@ public class BasicListener extends BasicBaseListener {
             return;
         }
         exitExpression();
+    }
+
+    @Override
+    public void enterPointExpr(BasicParser.PointExprContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        if (renderer.isTextMode()) {
+            throw new BasicError(FUNCTION_ERROR, context.getPp());
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitPointExpr(BasicParser.PointExprContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        if (renderer.isTextMode()) {
+            throw new BasicError(FUNCTION_ERROR, context.getPp());
+        }
+        var expression = context.expressionStack().pop();
+        var x = expression.getValue(0).toNumber();
+        var y = expression.getValue(1).toNumber();
+        var c = renderer.getColorIndex(x, y);
+        context.expressionStack().peek().addValue(new Value(c));
     }
 
     @Override
