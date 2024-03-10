@@ -43,6 +43,9 @@ statement:
     | drawFCText
     | arcade
     | flip
+    | data
+    | read
+    | restore
     | help
     ;
 
@@ -93,6 +96,9 @@ drawCText: 'CTEXT' expression 'AT' expression ',' expression;
 drawFCText: 'FCTEXT' expression 'AT' expression ',' expression;
 arcade: 'ARCADE' ;
 flip: 'FLIP' ;
+data: 'DATA' expression (',' expression)* ;
+restore: 'RESTORE' (NUMBER)? ;
+read: 'READ' identifier (',' identifier)* ;
 help: 'HELP' (topic=STRING_LITERAL)? ;
 
 identifier: IDENTIFIER ('[' expression (',' expression)* ']')? ;

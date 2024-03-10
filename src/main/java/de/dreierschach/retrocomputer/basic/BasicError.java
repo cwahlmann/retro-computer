@@ -11,6 +11,7 @@ public class BasicError extends RuntimeException {
         SAVING_ERROR,
         DELETE_ERROR,
         FUNCTION_ERROR,
+        OUT_OF_DATA_ERROR,
     }
 
     public BasicError(Type type, PP pp) {

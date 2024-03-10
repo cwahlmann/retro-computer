@@ -49,7 +49,7 @@ public class FileService {
         var file = getPath().resolve(name + ".BAS");
         memory.clearAll();
         try {
-            Files.readAllLines(file, StandardCharsets.UTF_8).forEach(memory::withLines);
+            Files.readAllLines(file, StandardCharsets.UTF_8).forEach(memory::addLines);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

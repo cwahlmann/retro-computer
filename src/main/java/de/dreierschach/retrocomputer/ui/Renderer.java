@@ -36,7 +36,7 @@ public class Renderer {
     private Renderer.CursorType cursorType = Renderer.CursorType.INSERT;
     private boolean arcadeMode;
 
-    public Renderer(VideoConfig config) throws Exception {
+    public Renderer(VideoConfig config) {
         this.config = config;
         initVideoMode(VideoMode.HIRES);
         setVideoMode(VideoMode.TEXT_GREEN);
@@ -363,7 +363,6 @@ public class Renderer {
         if (pos >= page2draw().length) {
             return "";
         }
-        var x = new char[100];
         var s = pos + size > page2draw().length ? page2draw().length - pos : size;
         var cs = Arrays.copyOfRange(page2draw(), pos, pos + s);
         return Arrays.stream(cs).map(ch -> "" + ch.c()).collect(Collectors.joining());
@@ -452,11 +451,13 @@ public class Renderer {
         }
         var px = (int) ((cursor % config.getWidth()) * charWidth + offsetX);
         var py = (int) ((cursor / config.getWidth()) * charHeight + offsetY);
-        g2.setColor(gfxColors.get(textScreen[actualPage][cursor].fg()));
-        switch (cursorType) {
-            case INSERT -> g2.drawLine(px, py, px, py + (int) charHeight);
-            case OVERWRITE ->
-                    g2.drawLine(px, py + (int) charHeight - 1, px + (int) charWidth, py + (int) charHeight - 1);
+        if (cursor < textScreen[actualPage].length) {
+            g2.setColor(gfxColors.get(textScreen[actualPage][cursor].fg()));
+            switch (cursorType) {
+                case INSERT -> g2.drawLine(px, py, px, py + (int) charHeight);
+                case OVERWRITE ->
+                        g2.drawLine(px, py + (int) charHeight - 1, px + (int) charWidth, py + (int) charHeight - 1);
+            }
         }
     }
 

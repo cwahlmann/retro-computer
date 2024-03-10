@@ -12,6 +12,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import static de.dreierschach.retrocomputer.basic.RunningContext.DP.dp;
+
 public class RunningContext {
     public record PP(int line, int command) {
         public static PP pp(int line) {
@@ -23,10 +25,17 @@ public class RunningContext {
         }
     }
 
+    public record DP(int line, int index) {
+        public static DP dp(int line) {
+            return new DP(line, 0);
+        }
+    }
+
     private boolean running;
     private boolean interrupted;
     private PP pp;
     private PP nextPp;
+    private DP dp = dp(0);
     private final Memory memory;
     private final VideoConfig config;
 
@@ -106,6 +115,18 @@ public class RunningContext {
         this.nextPp = PP.pp(line);
     }
 
+    public DP getDp() {
+        return dp;
+    }
+
+    public void setDp(DP dp) {
+        this.dp = dp;
+    }
+
+    public void setDp(int lineNumber) {
+        this.dp = dp(lineNumber);
+    }
+
     public Memory memory() {
         return memory;
     }
@@ -138,7 +159,7 @@ public class RunningContext {
     }
 
     public Character getTypedKey() {
-        return Optional.ofNullable(keyTypedBuffer.poll()).orElse((char)0);
+        return Optional.ofNullable(keyTypedBuffer.poll()).orElse((char) 0);
     }
 
     public void addTypedKey(Character c) {

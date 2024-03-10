@@ -1,5 +1,6 @@
 package de.dreierschach.retrocomputer.basic.model;
 
+import de.dreierschach.retrocomputer.BasicParser;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -8,6 +9,25 @@ import java.util.*;
 public class Memory {
     private final SortedMap<Integer, String> lines = new TreeMap<>();
     private final Map<String, Value> values = new HashMap<>();
+
+    private final SortedMap<Integer, List<BasicParser.StatementContext>> parseTree = new TreeMap<>();
+    public SortedMap<Integer, List<Value>> dataValues = new TreeMap<>();
+
+    public SortedMap<Integer, List<BasicParser.StatementContext>> getParseTree() {
+        return parseTree;
+    }
+
+    public SortedMap<Integer, List<Value>> getDataValues() {
+        return dataValues;
+    }
+
+    public int getDataValueSize(int lineNumber) {
+        return dataValues.getOrDefault(lineNumber, Collections.emptyList()).size();
+    }
+
+    public int getNextDataLineNumber(int lineNumber) {
+        return lineNumber <= dataValues.lastKey() ? dataValues.tailMap(lineNumber).firstKey() : lineNumber;
+    }
 
     public void clearValues() {
         values.clear();
@@ -34,16 +54,14 @@ public class Memory {
         values.put(name, value);
     }
 
-    public Memory withLines(String... lines) {
+    public void addLines(String... lines) {
         for (String line : lines) {
             this.lines.put(getLineNumber(line.trim()), line.trim());
         }
-        return this;
     }
 
-    public Memory removeLine(int id) {
+    public void removeLine(int id) {
         lines.remove(id);
-        return this;
     }
 
     public Collection<String> lines() {

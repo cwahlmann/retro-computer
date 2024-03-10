@@ -801,13 +801,76 @@ public class BasicListener extends BasicBaseListener {
     }
 
     @Override
+    public void enterData(BasicParser.DataContext ctx) {
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitData(BasicParser.DataContext ctx) {
+        var expression = context.expressionStack().pop();
+        if (context.expressionStack().isEmpty()) {
+            return;
+        }
+        expression.getValues().forEach(v -> context.expressionStack().peek().addValue(v));
+    }
+
+    @Override
+    public void exitRestore(BasicParser.RestoreContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        if (ctx.NUMBER() != null) {
+            context.setDp(Integer.parseInt(ctx.NUMBER().getText()));
+            return;
+        }
+        context.setDp(0);
+    }
+
+    @Override
+    public void enterRead(BasicParser.ReadContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+    }
+
+    @Override
+    public void exitRead(BasicParser.ReadContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        var expression = context.expressionStack().pop();
+        int i = 0;
+        while (i < expression.getValues().size() - 1) {
+            var identifier = expression.getValue(i).toString();
+            var indexes = expression.getValue(i + 1).array().values().stream().map(Value::toNumber).toList();
+            var value = getNextDataValue();
+            setValueByIdentifier(identifier, indexes, value);
+            i = i + 2;
+        }
+    }
+
+    public Value getNextDataValue() {
+        if (context.getDp().index() >= context.memory().getDataValueSize(context.getDp().line())) {
+            context.setDp(context.memory().getNextDataLineNumber(context.getDp().line() + 1));
+        }
+        if (context.getDp().line() > context.memory().getDataValues().lastKey()) {
+            throw new BasicError(OUT_OF_DATA_ERROR, context.getPp());
+        }
+        var value = context.memory().getDataValues().get(context.getDp().line()).get(context.getDp().index());
+        context.setDp(new RunningContext.DP(context.getDp().line(), context.getDp().index() + 1));
+        return value;
+    }
+
+    @Override
     public void exitHelp(BasicParser.HelpContext ctx) {
         if (context.skip()) {
             return;
         }
         var topic = Optional.ofNullable(ctx.topic).map(Token::getText).map(t -> t.substring(1, t.length() - 1))
                 .flatMap(t -> Optional.ofNullable(helpConfig.getTopics().get(t))).orElse(helpConfig.getTopics().get("HELP"));
-        renderer.println(">> " + topic.syntax() + " --- " + topic.example(), context.getColor(), context.getBgColor());
+        renderer.println(">> " + topic.syntax(), context.getColor(), context.getBgColor());
+        renderer.println(">> " + topic.example(), context.getColor(), context.getBgColor());
         renderer.print(topic.description(), context.getColor(), context.getBgColor());
         if (topic.syntax().startsWith("HELP")) {
             renderer.println(helpConfig.getTopics().keySet().stream().sorted().collect(Collectors.joining(", ")), context.getColor(), context.getBgColor());

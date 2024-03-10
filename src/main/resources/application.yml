@@ -333,6 +333,18 @@ help:
       syntax: 'FLIP'
       example: 'FLIP'
       description: "SHOW BUFFERED SCREEN-CHANGES."
+    DATA:
+      syntax: "DATA <DATA1> [, <DATA2, ...]"
+      example: "DATA 1, \"HAUS\", 2, \"KATZE\""
+      description: "DEFINE DATA-VALUES TO BE USED BY THE \"READ\"-STATEMENT. THE DATA-POINTER CAN BE RESET BY \"RESTORE\""
+    READ:
+      syntax: "READ <VARIABLE1> [, <VARIABLE2>, ...]"
+      example: "READ A,B,X[7]"
+      description: "READ ONE OR MORE VALUES FROM DATA-STATEMENTS."
+    RESTORE:
+      syntax: "RESTORE [<LINE-NO>]"
+      example: "RESTORE 100"
+      description: "RESET THE DATA-POINTER (TO THE GIVEN LINE)"
     HELP:
       syntax: "HELP [<TOPIC>]"
       example: "HELP \"RECT\""

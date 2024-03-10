@@ -114,7 +114,7 @@ public class InputHandler {
                 } else if (matchesRemoveLine(input)) {
                     memory.removeLine(Integer.parseInt(input.trim()));
                 } else if (matchesStoreLine(input)) {
-                    memory.withLines(input);
+                    memory.addLines(input);
                 } else {
                     runAsync(() -> runner.run("0 " + input));
                 }
