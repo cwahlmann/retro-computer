@@ -10,6 +10,7 @@ public class VideoConfig {
     private int width = 800;
     private int height = 600;
     private boolean fullscreen = false;
+    private int vsync = 60;
 
     @NestedConfigurationProperty
     private List<GfxModeConfig> modes;
@@ -44,5 +45,13 @@ public class VideoConfig {
 
     public void setModes(List<GfxModeConfig> gfxmode) {
         this.modes = gfxmode;
+    }
+
+    public int getVsync() {
+        return vsync;
+    }
+
+    public void setVsync(int vsync) {
+        this.vsync = vsync;
     }
 }

@@ -653,6 +653,18 @@ public class BasicBaseListener implements BasicListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVsync(BasicParser.VsyncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVsync(BasicParser.VsyncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterHelp(BasicParser.HelpContext ctx) { }
 	/**
 	 * {@inheritDoc}

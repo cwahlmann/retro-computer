@@ -3,6 +3,7 @@ package de.dreierschach.retrocomputer.basic;
 import de.dreierschach.retrocomputer.BasicLexer;
 import de.dreierschach.retrocomputer.BasicParser;
 import de.dreierschach.retrocomputer.FileService;
+import de.dreierschach.retrocomputer.VsyncTimer;
 import de.dreierschach.retrocomputer.basic.model.Memory;
 import de.dreierschach.retrocomputer.basic.model.Value;
 import de.dreierschach.retrocomputer.basic.model.ValueExpression;
@@ -30,13 +31,15 @@ public class Runner {
     private final RunningContext context;
     private BasicListener listener;
     private final HelpConfig helpConfig;
+    private final VsyncTimer vsyncTimer;
 
-    public Runner(VideoConfig config, Renderer renderer, Memory memory, FileService fileService, HelpConfig helpConfig) {
+    public Runner(VideoConfig config, Renderer renderer, Memory memory, FileService fileService, HelpConfig helpConfig, VsyncTimer vsyncTimer) {
         this.memory = memory;
         this.renderer = renderer;
         this.fileService = fileService;
         this.context = new RunningContext(config, memory);
         this.helpConfig = helpConfig;
+        this.vsyncTimer = vsyncTimer;
     }
 
     public void run() {
@@ -115,7 +118,7 @@ public class Runner {
         var parser = new BasicParser(tokens);
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
-        listener = new BasicListener(renderer, context, fileService, helpConfig);
+        listener = new BasicListener(renderer, context, fileService, helpConfig, vsyncTimer);
         var programContext = parser.program();
         context.memory().getParseTree().clear();
         programContext.line().forEach(line -> context.memory().getParseTree().put(lineNumber(line), line.statement()));

@@ -46,6 +46,7 @@ statement:
     | data
     | read
     | restore
+    | vsync
     | help
     ;
 
@@ -99,6 +100,7 @@ flip: 'FLIP' ;
 data: 'DATA' expression (',' expression)* ;
 restore: 'RESTORE' (NUMBER)? ;
 read: 'READ' identifier (',' identifier)* ;
+vsync: 'VSYNC' ;
 help: 'HELP' (topic=STRING_LITERAL)? ;
 
 identifier: IDENTIFIER ('[' expression (',' expression)* ']')? ;

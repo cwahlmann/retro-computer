@@ -2,6 +2,7 @@ video:
   width: ${WIDTH:1280}
   height: ${HEIGHT:768}
   fullscreen: ${FULLSCREEN:false}
+  vsync: ${VSYNC:50}
   modes:
     - video-mode: TEXT_GREEN
       font: /JetBrainsMono/JetBrainsMono-Regular.ttf
@@ -345,6 +346,10 @@ help:
       syntax: "RESTORE [<LINE-NO>]"
       example: "RESTORE 100"
       description: "RESET THE DATA-POINTER (TO THE GIVEN LINE)"
+    VSYNC:
+      syntax: "VSYNC"
+      example: "VSYNC"
+      description: "WAIT FOR NEXT VSYNC-SIGNAL (50 HZ)"
     HELP:
       syntax: "HELP [<TOPIC>]"
       example: "HELP \"RECT\""

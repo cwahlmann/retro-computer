@@ -3,6 +3,7 @@ package de.dreierschach.retrocomputer.basic;
 import de.dreierschach.retrocomputer.BasicBaseListener;
 import de.dreierschach.retrocomputer.BasicParser;
 import de.dreierschach.retrocomputer.FileService;
+import de.dreierschach.retrocomputer.VsyncTimer;
 import de.dreierschach.retrocomputer.basic.model.*;
 import de.dreierschach.retrocomputer.config.HelpConfig;
 import de.dreierschach.retrocomputer.ui.Renderer;
@@ -12,6 +13,7 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static de.dreierschach.retrocomputer.basic.BasicError.Type.*;
@@ -23,12 +25,14 @@ public class BasicListener extends BasicBaseListener {
     private final RunningContext context;
     private final FileService fileService;
     private final HelpConfig helpConfig;
+    private final VsyncTimer vsyncTimer;
 
-    public BasicListener(Renderer renderer, RunningContext context, FileService fileService, HelpConfig helpConfig) {
+    public BasicListener(Renderer renderer, RunningContext context, FileService fileService, HelpConfig helpConfig, VsyncTimer vsyncTimer) {
         this.renderer = renderer;
         this.context = context;
         this.fileService = fileService;
         this.helpConfig = helpConfig;
+        this.vsyncTimer = vsyncTimer;
     }
 
     @Override
@@ -877,6 +881,11 @@ public class BasicListener extends BasicBaseListener {
         } else {
             renderer.println(context.getColor(), context.getBgColor());
         }
+    }
+
+    @Override
+    public void exitVsync(BasicParser.VsyncContext ctx) {
+        vsyncTimer.await();
     }
 
     // -------- Expressions

@@ -538,6 +538,16 @@ public interface BasicListener extends ParseTreeListener {
 	 */
 	void exitRead(BasicParser.ReadContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BasicParser#vsync}.
+	 * @param ctx the parse tree
+	 */
+	void enterVsync(BasicParser.VsyncContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BasicParser#vsync}.
+	 * @param ctx the parse tree
+	 */
+	void exitVsync(BasicParser.VsyncContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BasicParser#help}.
 	 * @param ctx the parse tree
 	 */
