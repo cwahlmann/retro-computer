@@ -897,8 +897,9 @@ public class BasicListener extends BasicBaseListener {
         if (context.skip()) {
             return;
         }
+        var expression = context.expressionStack().pop();
         if (ctx.expression() != null) {
-            var ticks = context.expressionStack().pop().evaluate().toNumber();
+            var ticks = expression.evaluate().toNumber();
             if (ticks <=0 || ticks >50) {
                 throw new BasicError(FUNCTION_ERROR, context.getPp());
             }

@@ -8,14 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 @Component("vsyncTimer")
 public class VsyncTimer {
     private static final Logger log = LoggerFactory.getLogger(VsyncTimer.class);
     private CountDownLatch vsyncFlag;
-    private int ticks = 1;
+    private int ticks;
 
     public VsyncTimer(VideoConfig videoConfig) {
+        ticks = 1;
         vsyncFlag = new CountDownLatch(ticks);
         var timer = new Timer();
         timer.scheduleAtFixedRate(
@@ -31,9 +33,10 @@ public class VsyncTimer {
 
     public void await() {
         try {
-            vsyncFlag.await();
+            vsyncFlag.await(1200, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             log.warn("Await vsync interrupter", e);
+            Thread.currentThread().interrupt();
         }
         reset();
     }
