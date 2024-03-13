@@ -347,9 +347,9 @@ help:
       example: "RESTORE 100"
       description: "RESET THE DATA-POINTER (TO THE GIVEN LINE)"
     VSYNC:
-      syntax: "VSYNC"
-      example: "VSYNC"
-      description: "WAIT FOR NEXT VSYNC-SIGNAL (50 HZ)"
+      syntax: "VSYNC [<TICKS>]"
+      example: "VSYNC 20"
+      description: "WAIT FOR THE VSYNC-SIGNAL OR DEFINE THE VSYNC FREQUENCY (50/<TICKS> HZ)"
     HELP:
       syntax: "HELP [<TOPIC>]"
       example: "HELP \"RECT\""

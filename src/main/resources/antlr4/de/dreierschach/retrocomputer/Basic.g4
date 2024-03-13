@@ -100,7 +100,7 @@ flip: 'FLIP' ;
 data: 'DATA' expression (',' expression)* ;
 restore: 'RESTORE' (NUMBER)? ;
 read: 'READ' identifier (',' identifier)* ;
-vsync: 'VSYNC' ;
+vsync: 'VSYNC' (expression)? ;
 help: 'HELP' (topic=STRING_LITERAL)? ;
 
 identifier: IDENTIFIER ('[' expression (',' expression)* ']')? ;

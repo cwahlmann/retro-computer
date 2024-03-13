@@ -1,31 +1,48 @@
 package de.dreierschach.retrocomputer;
 
 import de.dreierschach.retrocomputer.config.VideoConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 
 @Component("vsyncTimer")
 public class VsyncTimer {
-    private CompletableFuture<Boolean> vsyncFlag;
+    private static final Logger log = LoggerFactory.getLogger(VsyncTimer.class);
+    private CountDownLatch vsyncFlag;
+    private int ticks = 1;
 
     public VsyncTimer(VideoConfig videoConfig) {
-        vsyncFlag = new CompletableFuture<>();
+        vsyncFlag = new CountDownLatch(ticks);
         var timer = new Timer();
         timer.scheduleAtFixedRate(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        vsyncFlag.complete(true);
+                        vsyncFlag.countDown();
+                        ;
                     }
                 }
                 , 0L, (long) (1000 / videoConfig.getVsync()));
     }
 
     public void await() {
-        vsyncFlag.join();
-        vsyncFlag = new CompletableFuture<>();
+        try {
+            vsyncFlag.await();
+        } catch (InterruptedException e) {
+            log.warn("Await vsync interrupter", e);
+        }
+        reset();
+    }
+
+    public void setTicks(int ticks) {
+        this.ticks = ticks;
+    }
+
+    public void reset() {
+        vsyncFlag = new CountDownLatch(ticks);
     }
 }

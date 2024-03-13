@@ -884,7 +884,27 @@ public class BasicListener extends BasicBaseListener {
     }
 
     @Override
+    public void enterVsync(BasicParser.VsyncContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        context.expressionStack().push(new ValueExpression());
+
+    }
+
+    @Override
     public void exitVsync(BasicParser.VsyncContext ctx) {
+        if (context.skip()) {
+            return;
+        }
+        if (ctx.expression() != null) {
+            var ticks = context.expressionStack().pop().evaluate().toNumber();
+            if (ticks <=0 || ticks >50) {
+                throw new BasicError(FUNCTION_ERROR, context.getPp());
+            }
+            vsyncTimer.setTicks(ticks);
+            return;
+        }
         vsyncTimer.await();
     }
 

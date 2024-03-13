@@ -149,6 +149,8 @@ public class Runner {
         context.setPp(lineNumber);
         context.setNextPp(lineNumber);
         context.setDp(0);
+        vsyncTimer.setTicks(1);
+        vsyncTimer.reset();
         try {
             execute();
         } catch (BasicError e) {
