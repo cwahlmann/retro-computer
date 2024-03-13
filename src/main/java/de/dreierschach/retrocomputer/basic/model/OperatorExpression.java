@@ -62,7 +62,7 @@ public class OperatorExpression extends Expression {
 
     private Value mul(Value v1, Value v2) {
         return switch (v1.type()) {
-            case STRING -> new Value(v1.toDoubleNumber() / v2.toDoubleNumber());
+            case STRING -> new Value(v1.toDoubleNumber() * v2.toDoubleNumber());
             case NUMBER -> new Value(v1.number() * v2.number());
             case DOUBLE_NUMBER -> new Value(v1.doubleNumber() * v2.doubleNumber());
             case BOOL -> new Value(v1.bool() & v2.bool()); // 0*x=x*0=0, 1*1=1
