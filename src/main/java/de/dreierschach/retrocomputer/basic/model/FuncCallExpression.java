@@ -37,7 +37,7 @@ public class FuncCallExpression extends Expression {
         FN_CHR("CHR", (c, v) -> new Value(String.valueOf((char) v.get(0).toNumber()))),
         FN_VAL("VAL", (c, v) -> new Value(v.get(0).toString().charAt(0))),
         FN_INT("INT", (c, v) -> new Value(v.get(0).toNumber())),
-        FN_DBL("DBL", (c, v) -> new Value(v.get(0).toDoubleNumber())),
+        FN_FLOAT("FLOAT", (c, v) -> new Value(v.get(0).toDoubleNumber())),
         FN_STR("STR", (c, v) -> new Value(v.get(0).toString())),
         FN_RND("RND", BasicFunction::rnd),
         FN_SPC("SPC", (c, v) -> new Value(StringUtils.repeat(' ', v.get(0).toNumber()))),

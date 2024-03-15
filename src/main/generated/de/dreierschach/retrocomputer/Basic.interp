@@ -91,7 +91,7 @@ null
 'CHR'
 'VAL'
 'INT'
-'DBL'
+'FLOAT'
 'STR'
 'RND'
 'SPC'
@@ -198,7 +198,7 @@ FN_SGN
 FN_CHR
 FN_VAL
 FN_INT
-FN_DBL
+FN_FLOAT
 FN_STR
 FN_RND
 FN_SPC

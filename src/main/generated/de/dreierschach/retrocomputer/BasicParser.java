@@ -29,7 +29,7 @@ public class BasicParser extends Parser {
 		PERCENT=66, PLUS=67, MINUS=68, POW=69, EQUAL=70, NOT_EQUAL=71, LESS=72, 
 		LESS_OR_EQUAL=73, GREATER=74, GREATER_OR_EQUAL=75, AND=76, OR=77, XOR=78, 
 		FN_SIN=79, FN_COS=80, FN_TAN=81, FN_ASIN=82, FN_ACOS=83, FN_ATAN=84, FN_SQR=85, 
-		FN_LOG=86, FN_ABS=87, FN_SGN=88, FN_CHR=89, FN_VAL=90, FN_INT=91, FN_DBL=92, 
+		FN_LOG=86, FN_ABS=87, FN_SGN=88, FN_CHR=89, FN_VAL=90, FN_INT=91, FN_FLOAT=92, 
 		FN_STR=93, FN_RND=94, FN_SPC=95, FN_SUBSTR=96, FN_HEX=97, FN_AHEX=98, 
 		FN_WIDTH=99, FN_HEIGHT=100, NL=101, SPACE=102, COMMENT=103, IDENTIFIER=104;
 	public static final int
@@ -75,7 +75,7 @@ public class BasicParser extends Parser {
 			null, null, null, "'*'", "'/'", "'%'", "'+'", "'-'", "'^'", "'='", "'<>'", 
 			"'<'", "'<='", "'>'", "'>='", "'AND'", "'OR'", "'XOR'", "'SIN'", "'COS'", 
 			"'TAN'", "'ASIN'", "'ACOS'", "'ATAN'", "'SQR'", "'LOG'", "'ABS'", "'SGN'", 
-			"'CHR'", "'VAL'", "'INT'", "'DBL'", "'STR'", "'RND'", "'SPC'", "'SUBSTR'", 
+			"'CHR'", "'VAL'", "'INT'", "'FLOAT'", "'STR'", "'RND'", "'SPC'", "'SUBSTR'", 
 			"'HEX'", "'AHEX'", "'WIDTH'", "'HEIGHT'"
 		};
 	}
@@ -91,7 +91,7 @@ public class BasicParser extends Parser {
 			"SLASH", "PERCENT", "PLUS", "MINUS", "POW", "EQUAL", "NOT_EQUAL", "LESS", 
 			"LESS_OR_EQUAL", "GREATER", "GREATER_OR_EQUAL", "AND", "OR", "XOR", "FN_SIN", 
 			"FN_COS", "FN_TAN", "FN_ASIN", "FN_ACOS", "FN_ATAN", "FN_SQR", "FN_LOG", 
-			"FN_ABS", "FN_SGN", "FN_CHR", "FN_VAL", "FN_INT", "FN_DBL", "FN_STR", 
+			"FN_ABS", "FN_SGN", "FN_CHR", "FN_VAL", "FN_INT", "FN_FLOAT", "FN_STR", 
 			"FN_RND", "FN_SPC", "FN_SUBSTR", "FN_HEX", "FN_AHEX", "FN_WIDTH", "FN_HEIGHT", 
 			"NL", "SPACE", "COMMENT", "IDENTIFIER"
 		};
@@ -4032,7 +4032,7 @@ public class BasicParser extends Parser {
 			case FN_CHR:
 			case FN_VAL:
 			case FN_INT:
-			case FN_DBL:
+			case FN_FLOAT:
 			case FN_STR:
 			case FN_RND:
 			case FN_SPC:
@@ -4274,7 +4274,7 @@ public class BasicParser extends Parser {
 		public TerminalNode FN_CHR() { return getToken(BasicParser.FN_CHR, 0); }
 		public TerminalNode FN_VAL() { return getToken(BasicParser.FN_VAL, 0); }
 		public TerminalNode FN_INT() { return getToken(BasicParser.FN_INT, 0); }
-		public TerminalNode FN_DBL() { return getToken(BasicParser.FN_DBL, 0); }
+		public TerminalNode FN_FLOAT() { return getToken(BasicParser.FN_FLOAT, 0); }
 		public TerminalNode FN_STR() { return getToken(BasicParser.FN_STR, 0); }
 		public TerminalNode FN_RND() { return getToken(BasicParser.FN_RND, 0); }
 		public TerminalNode FN_SPC() { return getToken(BasicParser.FN_SPC, 0); }

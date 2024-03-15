@@ -123,7 +123,7 @@ help:
       example: "A=\"HI\":B=42:C=1.4:E=[[1,2,3],[4,5],\"SIX\"]:F=PI"
       description: "DEFINES A LITERAL VALUE."
     FUNCTION:
-      syntax: "SIN|COS|TAN|ASIN|ACOS|ATAN|SQR|LOG|ABS|SGN|CHR|VAL|INT|DBL|STR|RND|SPC|SUBSTR|HEX|AHEX|WIDTH|HEIGHT(<EXPRESSION> [, <EXPRESSION> [, ...]])"
+      syntax: "SIN|COS|TAN|ASIN|ACOS|ATAN|SQR|LOG|ABS|SGN|CHR|VAL|INT|FLOAT|STR|RND|SPC|SUBSTR|HEX|AHEX|WIDTH|HEIGHT(<EXPRESSION> [, <EXPRESSION> [, ...]])"
       example: "SUBSTR(\"HALLO WELT\", 2,5)"
       description: "GET THE RESULT OF A FUNCTION."
     SIN:
@@ -179,8 +179,8 @@ help:
       example: "INT(1.23)"
       description: "GET THE INTEGER OF A NUMBER."
     DBL:
-      syntax: "DBL(<VALUE>)"
-      example: "DBL(5)"
+      syntax: "FLOAT(<VALUE>)"
+      example: "FLOAT(\"5\")"
       description: "CONVERT TO A FLOATING VALUE."
     STR:
       syntax: "STR(<VALUE>)"
