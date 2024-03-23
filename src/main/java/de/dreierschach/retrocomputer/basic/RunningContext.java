@@ -4,6 +4,7 @@ import de.dreierschach.retrocomputer.basic.model.Expression;
 import de.dreierschach.retrocomputer.basic.model.Memory;
 import de.dreierschach.retrocomputer.basic.model.Stack;
 import de.dreierschach.retrocomputer.config.VideoConfig;
+import org.springframework.stereotype.Component;
 
 import java.util.Deque;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 import static de.dreierschach.retrocomputer.basic.RunningContext.DP.dp;
 
+@Component
 public class RunningContext {
     public record PP(int line, int command) {
         public static PP pp(int line) {

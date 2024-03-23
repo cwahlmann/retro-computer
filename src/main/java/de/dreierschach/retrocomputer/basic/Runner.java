@@ -1,14 +1,12 @@
 package de.dreierschach.retrocomputer.basic;
 
 import de.dreierschach.retrocomputer.BasicLexer;
+import de.dreierschach.retrocomputer.BasicListener;
 import de.dreierschach.retrocomputer.BasicParser;
-import de.dreierschach.retrocomputer.FileService;
 import de.dreierschach.retrocomputer.VsyncTimer;
 import de.dreierschach.retrocomputer.basic.model.Memory;
 import de.dreierschach.retrocomputer.basic.model.Value;
 import de.dreierschach.retrocomputer.basic.model.ValueExpression;
-import de.dreierschach.retrocomputer.config.HelpConfig;
-import de.dreierschach.retrocomputer.config.VideoConfig;
 import de.dreierschach.retrocomputer.ui.Renderer;
 import de.dreierschach.retrocomputer.ui.VideoMode;
 import org.antlr.v4.runtime.*;
@@ -17,6 +15,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,18 +26,15 @@ public class Runner {
     private static final Logger log = LoggerFactory.getLogger(Runner.class);
     private final Renderer renderer;
     private final Memory memory;
-    private final FileService fileService;
     private final RunningContext context;
-    private BasicListener listener;
-    private final HelpConfig helpConfig;
+    private final BasicListener listener;
     private final VsyncTimer vsyncTimer;
 
-    public Runner(VideoConfig config, Renderer renderer, Memory memory, FileService fileService, HelpConfig helpConfig, VsyncTimer vsyncTimer) {
+    public Runner(Renderer renderer, Memory memory, VsyncTimer vsyncTimer, @Qualifier("basicListenerProxy") BasicListener listener, RunningContext context) {
+        this.listener = listener;
         this.memory = memory;
         this.renderer = renderer;
-        this.fileService = fileService;
-        this.context = new RunningContext(config, memory);
-        this.helpConfig = helpConfig;
+        this.context = context;
         this.vsyncTimer = vsyncTimer;
     }
 
@@ -118,7 +114,6 @@ public class Runner {
         var parser = new BasicParser(tokens);
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
-        listener = new BasicListener(renderer, context, fileService, helpConfig, vsyncTimer);
         var programContext = parser.program();
         context.memory().getParseTree().clear();
         programContext.line().forEach(line -> context.memory().getParseTree().put(lineNumber(line), line.statement()));

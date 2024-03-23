@@ -13,21 +13,20 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static de.dreierschach.retrocomputer.basic.BasicError.Type.*;
 import static de.dreierschach.retrocomputer.basic.model.Value.arrayValue;
 import static de.dreierschach.retrocomputer.ui.VideoMode.videoMode;
 
-public class BasicListener extends BasicBaseListener {
+public class BasicListenerImpl extends BasicBaseListener {
     private final Renderer renderer;
     private final RunningContext context;
     private final FileService fileService;
     private final HelpConfig helpConfig;
     private final VsyncTimer vsyncTimer;
 
-    public BasicListener(Renderer renderer, RunningContext context, FileService fileService, HelpConfig helpConfig, VsyncTimer vsyncTimer) {
+    public BasicListenerImpl(Renderer renderer, RunningContext context, FileService fileService, HelpConfig helpConfig, VsyncTimer vsyncTimer) {
         this.renderer = renderer;
         this.context = context;
         this.fileService = fileService;
@@ -900,7 +899,7 @@ public class BasicListener extends BasicBaseListener {
         var expression = context.expressionStack().pop();
         if (ctx.expression() != null) {
             var ticks = expression.evaluate().toNumber();
-            if (ticks <=0 || ticks >50) {
+            if (ticks <= 0 || ticks > 50) {
                 throw new BasicError(FUNCTION_ERROR, context.getPp());
             }
             vsyncTimer.setTicks(ticks);
