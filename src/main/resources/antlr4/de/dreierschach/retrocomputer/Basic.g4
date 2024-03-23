@@ -132,7 +132,7 @@ keyboard            : 'KEY' '(' (expression)? ')' ;
 functionCall:
     fn=(FN_SIN | FN_COS | FN_TAN | FN_ASIN | FN_ACOS | FN_ATAN
     | FN_SQR | FN_LOG | FN_ABS | FN_SGN | FN_CHR | FN_VAL | FN_INT | FN_FLOAT | FN_STR | FN_RND | FN_SPC | FN_SUBSTR
-    | FN_HEX | FN_AHEX | FN_WIDTH | FN_HEIGHT ) '(' (expression (',' expression)*)? ')' ;
+    | FN_HEX | FN_AHEX | FN_WIDTH | FN_HEIGHT | FN_LEN) '(' (expression (',' expression)*)? ')' ;
 
 NOT                 : 'NOT' ;
 
@@ -181,6 +181,7 @@ FN_HEX              : 'HEX' ;
 FN_AHEX             : 'AHEX' ;
 FN_WIDTH            : 'WIDTH' ;
 FN_HEIGHT           : 'HEIGHT' ;
+FN_LEN              : 'LEN' ;
 
 NL                  : [\n\r] ;
 SPACE               : [ \t]+ -> skip ;

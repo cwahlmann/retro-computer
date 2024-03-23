@@ -31,7 +31,8 @@ public class BasicParser extends Parser {
 		FN_SIN=79, FN_COS=80, FN_TAN=81, FN_ASIN=82, FN_ACOS=83, FN_ATAN=84, FN_SQR=85, 
 		FN_LOG=86, FN_ABS=87, FN_SGN=88, FN_CHR=89, FN_VAL=90, FN_INT=91, FN_FLOAT=92, 
 		FN_STR=93, FN_RND=94, FN_SPC=95, FN_SUBSTR=96, FN_HEX=97, FN_AHEX=98, 
-		FN_WIDTH=99, FN_HEIGHT=100, NL=101, SPACE=102, COMMENT=103, IDENTIFIER=104;
+		FN_WIDTH=99, FN_HEIGHT=100, FN_LEN=101, NL=102, SPACE=103, COMMENT=104, 
+		IDENTIFIER=105;
 	public static final int
 		RULE_program = 0, RULE_line = 1, RULE_statement = 2, RULE_forStatement = 3, 
 		RULE_nextStatement = 4, RULE_assignment = 5, RULE_ifStatement = 6, RULE_thenStatement = 7, 
@@ -76,7 +77,7 @@ public class BasicParser extends Parser {
 			"'<'", "'<='", "'>'", "'>='", "'AND'", "'OR'", "'XOR'", "'SIN'", "'COS'", 
 			"'TAN'", "'ASIN'", "'ACOS'", "'ATAN'", "'SQR'", "'LOG'", "'ABS'", "'SGN'", 
 			"'CHR'", "'VAL'", "'INT'", "'FLOAT'", "'STR'", "'RND'", "'SPC'", "'SUBSTR'", 
-			"'HEX'", "'AHEX'", "'WIDTH'", "'HEIGHT'"
+			"'HEX'", "'AHEX'", "'WIDTH'", "'HEIGHT'", "'LEN'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -93,7 +94,7 @@ public class BasicParser extends Parser {
 			"FN_COS", "FN_TAN", "FN_ASIN", "FN_ACOS", "FN_ATAN", "FN_SQR", "FN_LOG", 
 			"FN_ABS", "FN_SGN", "FN_CHR", "FN_VAL", "FN_INT", "FN_FLOAT", "FN_STR", 
 			"FN_RND", "FN_SPC", "FN_SUBSTR", "FN_HEX", "FN_AHEX", "FN_WIDTH", "FN_HEIGHT", 
-			"NL", "SPACE", "COMMENT", "IDENTIFIER"
+			"FN_LEN", "NL", "SPACE", "COMMENT", "IDENTIFIER"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -3421,7 +3422,7 @@ public class BasicParser extends Parser {
 			setState(470);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 2533274723321845L) != 0)) {
+			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 5066549513717749L) != 0)) {
 				{
 				setState(469);
 				expression(0);
@@ -4041,6 +4042,7 @@ public class BasicParser extends Parser {
 			case FN_AHEX:
 			case FN_WIDTH:
 			case FN_HEIGHT:
+			case FN_LEN:
 				{
 				_localctx = new FuncCallExprContext(_localctx);
 				_ctx = _localctx;
@@ -4236,7 +4238,7 @@ public class BasicParser extends Parser {
 			setState(549);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 2533274723321845L) != 0)) {
+			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 5066549513717749L) != 0)) {
 				{
 				setState(548);
 				expression(0);
@@ -4283,6 +4285,7 @@ public class BasicParser extends Parser {
 		public TerminalNode FN_AHEX() { return getToken(BasicParser.FN_AHEX, 0); }
 		public TerminalNode FN_WIDTH() { return getToken(BasicParser.FN_WIDTH, 0); }
 		public TerminalNode FN_HEIGHT() { return getToken(BasicParser.FN_HEIGHT, 0); }
+		public TerminalNode FN_LEN() { return getToken(BasicParser.FN_LEN, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -4313,7 +4316,7 @@ public class BasicParser extends Parser {
 			setState(553);
 			((FunctionCallContext)_localctx).fn = _input.LT(1);
 			_la = _input.LA(1);
-			if ( !(((((_la - 79)) & ~0x3f) == 0 && ((1L << (_la - 79)) & 4194303L) != 0)) ) {
+			if ( !(((((_la - 79)) & ~0x3f) == 0 && ((1L << (_la - 79)) & 8388607L) != 0)) ) {
 				((FunctionCallContext)_localctx).fn = (Token)_errHandler.recoverInline(this);
 			}
 			else {
@@ -4326,7 +4329,7 @@ public class BasicParser extends Parser {
 			setState(563);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 2533274723321845L) != 0)) {
+			if (((((_la - 53)) & ~0x3f) == 0 && ((1L << (_la - 53)) & 5066549513717749L) != 0)) {
 				{
 				setState(555);
 				expression(0);
@@ -4388,7 +4391,7 @@ public class BasicParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001h\u0238\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001i\u0238\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
@@ -4463,7 +4466,7 @@ public class BasicParser extends Parser {
 		"\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e"+
 		" \"$&(*,.02468:<>@BDFHJLNPRTVXZ\\^`bdfhjlnprt\u0000\u0006\u0001\u0000"+
 		"\t\n\u0001\u0000@B\u0001\u0000CD\u0001\u0000FK\u0001\u0000LN\u0001\u0000"+
-		"Od\u0255\u0000v\u0001\u0000\u0000\u0000\u0002\u008a\u0001\u0000\u0000"+
+		"Oe\u0255\u0000v\u0001\u0000\u0000\u0000\u0002\u008a\u0001\u0000\u0000"+
 		"\u0000\u0004\u00c1\u0001\u0000\u0000\u0000\u0006\u00c3\u0001\u0000\u0000"+
 		"\u0000\b\u00cd\u0001\u0000\u0000\u0000\n\u00cf\u0001\u0000\u0000\u0000"+
 		"\f\u00d3\u0001\u0000\u0000\u0000\u000e\u00dd\u0001\u0000\u0000\u0000\u0010"+
@@ -4490,12 +4493,12 @@ public class BasicParser extends Parser {
 		"\u0001\u0000\u0000\u0000l\u01d8\u0001\u0000\u0000\u0000n\u01dc\u0001\u0000"+
 		"\u0000\u0000p\u020c\u0001\u0000\u0000\u0000r\u0222\u0001\u0000\u0000\u0000"+
 		"t\u0229\u0001\u0000\u0000\u0000v\u007f\u0003\u0002\u0001\u0000wy\u0005"+
-		"e\u0000\u0000xw\u0001\u0000\u0000\u0000yz\u0001\u0000\u0000\u0000zx\u0001"+
+		"f\u0000\u0000xw\u0001\u0000\u0000\u0000yz\u0001\u0000\u0000\u0000zx\u0001"+
 		"\u0000\u0000\u0000z{\u0001\u0000\u0000\u0000{|\u0001\u0000\u0000\u0000"+
 		"|~\u0003\u0002\u0001\u0000}x\u0001\u0000\u0000\u0000~\u0081\u0001\u0000"+
 		"\u0000\u0000\u007f}\u0001\u0000\u0000\u0000\u007f\u0080\u0001\u0000\u0000"+
 		"\u0000\u0080\u0085\u0001\u0000\u0000\u0000\u0081\u007f\u0001\u0000\u0000"+
-		"\u0000\u0082\u0084\u0005e\u0000\u0000\u0083\u0082\u0001\u0000\u0000\u0000"+
+		"\u0000\u0082\u0084\u0005f\u0000\u0000\u0083\u0082\u0001\u0000\u0000\u0000"+
 		"\u0084\u0087\u0001\u0000\u0000\u0000\u0085\u0083\u0001\u0000\u0000\u0000"+
 		"\u0085\u0086\u0001\u0000\u0000\u0000\u0086\u0088\u0001\u0000\u0000\u0000"+
 		"\u0087\u0085\u0001\u0000\u0000\u0000\u0088\u0089\u0005\u0000\u0000\u0001"+
@@ -4504,7 +4507,7 @@ public class BasicParser extends Parser {
 		"\u008f\u0003\u0004\u0002\u0000\u008e\u008c\u0001\u0000\u0000\u0000\u008f"+
 		"\u0092\u0001\u0000\u0000\u0000\u0090\u008e\u0001\u0000\u0000\u0000\u0090"+
 		"\u0091\u0001\u0000\u0000\u0000\u0091\u0003\u0001\u0000\u0000\u0000\u0092"+
-		"\u0090\u0001\u0000\u0000\u0000\u0093\u00c2\u0005g\u0000\u0000\u0094\u00c2"+
+		"\u0090\u0001\u0000\u0000\u0000\u0093\u00c2\u0005h\u0000\u0000\u0094\u00c2"+
 		"\u0003\u0006\u0003\u0000\u0095\u00c2\u0003\b\u0004\u0000\u0096\u00c2\u0003"+
 		"\n\u0005\u0000\u0097\u00c2\u0003\f\u0006\u0000\u0098\u00c2\u0003\u0012"+
 		"\t\u0000\u0099\u00c2\u0003\u0014\n\u0000\u009a\u00c2\u0003\u0016\u000b"+
@@ -4679,7 +4682,7 @@ public class BasicParser extends Parser {
 		"\u0000\u01d7k\u0001\u0000\u0000\u0000\u01d8\u01da\u00054\u0000\u0000\u01d9"+
 		"\u01db\u0005>\u0000\u0000\u01da\u01d9\u0001\u0000\u0000\u0000\u01da\u01db"+
 		"\u0001\u0000\u0000\u0000\u01dbm\u0001\u0000\u0000\u0000\u01dc\u01e8\u0005"+
-		"h\u0000\u0000\u01dd\u01de\u00055\u0000\u0000\u01de\u01e3\u0003p8\u0000"+
+		"i\u0000\u0000\u01dd\u01de\u00055\u0000\u0000\u01de\u01e3\u0003p8\u0000"+
 		"\u01df\u01e0\u0005\f\u0000\u0000\u01e0\u01e2\u0003p8\u0000\u01e1\u01df"+
 		"\u0001\u0000\u0000\u0000\u01e2\u01e5\u0001\u0000\u0000\u0000\u01e3\u01e1"+
 		"\u0001\u0000\u0000\u0000\u01e3\u01e4\u0001\u0000\u0000\u0000\u01e4\u01e6"+

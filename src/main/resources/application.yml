@@ -178,7 +178,7 @@ help:
       syntax: "INT(<VALUE>)"
       example: "INT(1.23)"
       description: "GET THE INTEGER OF A NUMBER."
-    DBL:
+    FLOAT:
       syntax: "FLOAT(<VALUE>)"
       example: "FLOAT(\"5\")"
       description: "CONVERT TO A FLOATING VALUE."
@@ -206,6 +206,10 @@ help:
       syntax: "AHEX(<HEX-STRING>)"
       example: "AHEX(\"F3B7\")"
       description: "GET THE NUMERICAL VALUE OF A HECADECIMAL STRING."
+    LEN:
+      syntax: "LEN(<VALUE>)"
+      example: "LEN(\"HALLO\")"
+      description: "GET THE LENGTH OR SIZE OF A VALUE"
     WIDTH:
       syntax: "WIDTH()"
       example: "WIDTH()"

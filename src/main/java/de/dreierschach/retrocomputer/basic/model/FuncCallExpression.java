@@ -46,6 +46,7 @@ public class FuncCallExpression extends Expression {
         FN_AHEX("AHEX", (c, v) -> new Value(Integer.parseInt(v.get(0).toString(), 16))),
         FN_WIDTH("WIDTH", (c, v) -> new Value(c.getWidth())),
         FN_HEIGHT("HEIGHT", (c, v) -> new Value(c.getHeight())),
+        FN_LEN("LEN", BasicFunction::len)
         ;
 
         BasicFunction(String token, BiFunction<GfxModeConfig, List<Value>, Value> function) {
@@ -85,6 +86,16 @@ public class FuncCallExpression extends Expression {
                 case NUMBER -> new Value((int) (Math.random() * v.get(0).number()));
                 case DOUBLE_NUMBER -> new Value(Math.random() * v.get(0).doubleNumber());
                 case ARRAY -> Value.UNDEF;
+            };
+        }
+
+        private static Value len(GfxModeConfig c, List<Value> v) {
+            return switch (v.get(0).type()) {
+                case STRING -> new Value(v.get(0).string().length());
+                case BOOL -> new Value(1);
+                case NUMBER -> new Value(1);
+                case DOUBLE_NUMBER -> new Value(1);
+                case ARRAY -> new Value(v.get(0).array().size());
             };
         }
 
