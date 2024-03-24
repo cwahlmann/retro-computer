@@ -13,7 +13,7 @@ FULLSCREEN=true|false
 ```
 
 To start the application, build the project using the maven task `package`
-and start it by the `java -jar` command (Java 19+):
+and start it by the `java -jar` command (Java 17+):
 
 ```shell
 mvn package
@@ -24,7 +24,7 @@ java -jar retro-computer-<version>.jar -Xmx1G or -Xms1G
 
 | Technoloy   | Description                                              |
 |-------------|----------------------------------------------------------|
-| Java 19     | streams, records, lambdas, default-methodes etc.         |
+| Java 17     | streams, records, lambdas, default-methodes etc.         |
 | Maven       | the build-tool                                           |
 | Spring Boot | use core features (configuration, Injection, life-cycle) |
 | Antlr       | parse and execute basic language using a g4-grammer      |
