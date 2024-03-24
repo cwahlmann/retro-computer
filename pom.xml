@@ -12,51 +12,38 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springboot.version>3.2.3</springboot.version>
+        <springboot.version>3.2.4</springboot.version>
         <antlr4.version>4.13.1</antlr4.version>
         <apache.commons-lang3.version>3.14.0</apache.commons-lang3.version>
         <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
             <version>${springboot.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
             <version>${springboot.version}</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>
             <version>${antlr4.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-maven-plugin -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-maven-plugin</artifactId>
             <version>${antlr4.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons-lang3.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
-<!--        <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>${build-helper-maven-plugin.version}</version>
-        </dependency>-->
     </dependencies>
 
     <build>

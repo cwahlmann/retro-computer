@@ -5,19 +5,30 @@ A fast basic-powered emulator based on an antlr4-grammar
 Basic-files will be stored in the directory `HOME/retrocomputer/files`.
 
 The application uses environment variables for the screen-settings:
+
 ```
 WIDTH=<window-width>
 HEIGHT=<window-height>
 FULLSCREEN=true|false
 ```
 
-To start the application, build the project using the maven task `package` 
+To start the application, build the project using the maven task `package`
 and start it by the `java -jar` command (Java 19+):
 
 ```shell
 maven package
-java -jar RetroComputer-<version>.jar -Xmx1G or -Xms1G
+java -jar retro-computer-<version>.jar -Xmx1G or -Xms1G
 ```
+
+## Tech-Stack
+
+| Technoloy   | Description                                              |
+|-------------|----------------------------------------------------------|
+| Java 19     | streams, records, lambdas, default-methodes etc.         |
+| Maven       | the build-tool                                           |
+| Spring Boot | use core features (configuration, Injection, life-cycle) |
+| Antlr       | parse and execute basic language using a g4-grammer      |
+| Java-AWT    | the simplest way to render graphics on desktop           |
 
 ## Basic examples
 
