@@ -22,7 +22,7 @@ java -jar retro-computer-<version>.jar -Xmx1G or -Xms1G
 
 ## Tech-Stack
 
-| Technoloy   | Description                                              |
+| Technology   | Description                                              |
 |-------------|----------------------------------------------------------|
 | Java 17     | streams, records, lambdas, default-methodes etc.         |
 | Maven       | the build-tool                                           |
