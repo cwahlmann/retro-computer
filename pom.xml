@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.dreierschach</groupId>
-    <artifactId>RetroComputer</artifactId>
+    <artifactId>retro-computer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -22,7 +22,8 @@
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
             <version>${springboot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
