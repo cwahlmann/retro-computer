@@ -16,7 +16,7 @@ To start the application, build the project using the maven task `package`
 and start it by the `java -jar` command (Java 19+):
 
 ```shell
-maven package
+mvn package
 java -jar retro-computer-<version>.jar -Xmx1G or -Xms1G
 ```
 
